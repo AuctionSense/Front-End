@@ -1,9 +1,26 @@
-import './App.css';
+import "./App.css";
+import { Link, Routes, Route } from "react-router-dom";
+import Home from "./pages/home/Home";
+import Games from "./pages/games/Games";
 
 function App() {
   return (
-    <div className="App">
-    </div>
+    <>
+      <nav>
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/games">Games</Link>
+          </li>
+        </ul>
+      </nav>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/games" element={<Games />} />
+      </Routes>
+    </>
   );
 }
 
