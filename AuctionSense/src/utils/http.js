@@ -1,4 +1,4 @@
-const getBaseUrl = () => {
+const GetBaseUrl = () => {
     let url;
     switch(process.env.NODE_ENV) {
       case 'production':
@@ -6,10 +6,10 @@ const getBaseUrl = () => {
         break;
       case 'development':
       default:
-        url = 'localhost:8080/api/';
+        url = 'http://localhost:8080/api/';
     }
   
     return url;
   }
   
-  export default getBaseUrl
+  export default GetBaseUrl
