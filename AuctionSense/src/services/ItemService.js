@@ -5,6 +5,7 @@ function GetAllItems() {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
+  const [hasError, setHasError] = useState(false);
 
   const fetchData = async () => {
     return await fetch(GetBaseUrl() + "items", {
@@ -27,16 +28,20 @@ function GetAllItems() {
         (error) => {
           setIsLoaded(true);
           setError(error);
+          setHasError(true);
         }
       );
   }, []);
 
   if (error) {
-    return error.message;
+    return {
+      hasError: hasError,
+      message: error.message,
+    };
   } else if (!isLoaded) {
-    return "Loading items...";
+    return { loading: "Loading items..." };
   } else {
-    return items;
+    return { list: items };
   }
 }
 
