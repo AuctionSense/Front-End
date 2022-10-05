@@ -8,14 +8,14 @@ function Games() {
     return <>items</>;
   } else {
     return (
-      <>
+      <div>
         {items.map((item) => (
-          <ul key={item.id}>
-            <li>{item.name}</li>
-            <li>{item.description}</li>
-          </ul>
+          <div key={item.id}>
+            <h1>{item.name}</h1>
+            <p>{item.description}</p>
+          </div>
         ))}
-      </>
+      </div>
     );
   }
 }
