@@ -39,7 +39,7 @@ function GetAllItems() {
       message: error.message,
     };
   } else if (!isLoaded) {
-    return { loading: "Loading items..." };
+    return { loading: "Loading items.." };
   } else {
     return { list: items };
   }
