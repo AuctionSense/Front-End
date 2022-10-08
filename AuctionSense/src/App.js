@@ -32,6 +32,11 @@ function App() {
         <Route path="/games" element={<Games />} />
         <Route path="/cars" element={<Cars />} />
       </Routes>
+      <div>
+      <footer>
+        @JarnoBV
+      </footer>
+    </div>
     </>
   );
 }
