@@ -1,0 +1,66 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+.navBarTop ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333; 
+}
+
+.navBarTop li {
+  float: left;
+  color: white;
+  display: block;
+  text-align: center;
+  padding: 14px 16px;
+}
+
+.navBarTopLink {
+  color: white;
+  text-decoration: none;
+}
+
+.dropDown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropDown p {
+  margin: 0;
+  border: none;
+  cursor: default;
+}
+
+.dropDownContent {
+  display: none;
+  position: fixed;
+  background-color: #f9f9f9;
+  min-width: 10%;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  left: 11.45%;
+  top: 4.3%;
+  z-index: 1;
+}
+
+.dropDownContentLink {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropDownContentLink:hover {
+  background-color: #f1f1f1;
+}
+
+.dropDown:hover .dropDownContent{
+  display: block;
+}
+
+.navBarTop li:hover {
+  background-color: #111;
+}

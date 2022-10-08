@@ -1,15 +1,22 @@
 import React from "react";
-import GetAllItems from "../services/ItemService";
+import { useLocation } from "react-router-dom";
+import { GetAllItemsByCategory } from "services/ItemService";
 
 function Games() {
-  const items  = GetAllItems();
+  const location = useLocation();
+  const category = location.pathname.replace("/", "");
+  const items  = GetAllItemsByCategory(category);
 
   if (items.loading != null) {
     return <>{items.loading}</>;
   }
   else if(items.hasError === true)
   {
-    return <div>{items.message}</div>
+    return (
+    <div>
+      {items.message}
+    </div>
+    );
   }
   else {
     return (
