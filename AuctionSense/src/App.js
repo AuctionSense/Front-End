@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Games from "./pages/Games";
 import React from "react";
 import Cars from "pages/Cars";
+import Item from "pages/Item";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/games" element={<Games />} />
         <Route path="/cars" element={<Cars />} />
+        <Route path="/games/:id" element={<Item />} />
       </Routes>
       <div>
       <footer>

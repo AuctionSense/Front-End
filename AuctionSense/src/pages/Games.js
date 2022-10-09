@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { GetAllItemsByCategory } from "services/ItemService";
 
 function Games() {
@@ -23,6 +23,7 @@ function Games() {
       <div>
         {items.list.map((item) => (
           <div key={item.id}>
+            <Link to={`/games/${item.name}`}>Go to item</Link>
             <h1>{item.name}</h1>
             <p>{item.description}</p>
           </div>
