@@ -23,7 +23,7 @@ function Games() {
       <div>
         {items.list.map((item) => (
           <div key={item.id}>
-            <Link to={`/games/${item.name}`}>Go to item</Link>
+            <Link to={`/games/${item.name}`} state={{id: item.id}}>Go to item</Link>
             <h1>{item.name}</h1>
             <p>{item.description}</p>
           </div>

@@ -1,7 +1,9 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 import { GetItemById } from "services/ItemService";
 
-function Item(id) {
+function Item() {
+  const id = useLocation().state?.id;
   const item = GetItemById(id);
 
   if (item.loading != null) {
@@ -16,11 +18,13 @@ function Item(id) {
     );
   }
   else {
+    const {list} = item;
+    console.log(list);
   return (
     <div>
-      <div key={item.id}>
-        <h1>{item.name}</h1>
-        <p>{item.description}</p>
+      <div key={list.id}>
+        <h1>{list.name}</h1>
+        <p>{list.description}</p>
       </div>
     </div>
   );

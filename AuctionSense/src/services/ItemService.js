@@ -96,7 +96,7 @@ function GetItemById(id) {
 
   useEffect(() => {
     const fetchData = async () => {
-      return await fetch(GetBaseUrl() + `item/id=${id}`, {
+      return await fetch(GetBaseUrl() + `items/id=${id}`, {
         method: "GET",
         mode: "cors",
         headers: {
