@@ -9,36 +9,41 @@ import Item from "pages/Item";
 function App() {
   return (
     <>
-    <div>
-    <nav className={styles.navBarTop}>
-        <ul>
-          <li>
-            <Link className={styles.navBarTopLink} to="/">Image placeholder</Link>
-          </li>
-          <li className={styles.dropDown}>
-            <p>
-              Category
-            </p>
-            <div className={styles.dropDownContent}>
-              <Link className={styles.dropDownContentLink} to="/games">Games</Link>
-              <Link className={styles.dropDownContentLink} to="/cars">Cars</Link>
-            </div>
-          </li>
-        </ul>
-      </nav>
-    </div>
+        <div>
+          <nav className={styles.navBarTop}>
+            <ul>
+              <li>
+                <Link className={styles.navBarTopLink} to="/">
+                  Image placeholder
+                </Link>
+              </li>
+              <li className={styles.dropDown}>
+                <p>Category</p>
+                <div className={styles.dropDownContent}>
+                  <Link className={styles.dropDownContentLink} to="/games">
+                    Games
+                  </Link>
+                  <Link className={styles.dropDownContentLink} to="/cars">
+                    Cars
+                  </Link>
+                </div>
+              </li>
+            </ul>
+          </nav>
+        </div>
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/games" element={<Games />} />
-        <Route path="/cars" element={<Cars />} />
-        <Route path="/games/:id" element={<Item />} />
-      </Routes>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/games" element={<Games />} />
+          <Route path="/cars" element={<Cars />} />
+          <Route path="/games/:id" element={<Item />} />
+        </Routes>
       <div>
-      <footer>
-        @JarnoBV
-      </footer>
-    </div>
+        <button disabled>test</button>
+      </div>
+      <div>
+        <footer>@JarnoBV</footer>
+      </div>
     </>
   );
 }
