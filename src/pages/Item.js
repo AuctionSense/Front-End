@@ -4,27 +4,25 @@ import { GetItemById } from "services/ItemService";
 
 function Item() {
   const id = useLocation().state?.id;
-  const item = GetItemById(id);
+  const { error, isLoaded, item } = GetItemById(id);
 
-  if (item.loading != null) {
-    return <>{item.loading}</>;
+  if (!isLoaded) {
+    return <>{"Loading..."}</>;
   }
-  else if(item.hasError === true)
+  else if(error)
   {
     return (
-    <div>
-      {item.message}
-    </div>
+    <>
+      {error.message}
+    </>
     );
   }
   else {
-    const {list} = item;
-    console.log(list);
   return (
     <div>
-      <div key={list.id}>
-        <h1>{list.name}</h1>
-        <p>{list.description}</p>
+      <div key={item.id}>
+        <h1>{item.name}</h1>
+        <p>{item.description}</p>
       </div>
     </div>
   );

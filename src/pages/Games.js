@@ -5,23 +5,23 @@ import { GetAllItemsByCategory } from "services/ItemService";
 function Games() {
   const location = useLocation();
   const category = location.pathname.replace("/", "");
-  const items  = GetAllItemsByCategory(category);
+  const { error, isLoaded, items }  = GetAllItemsByCategory(category);
 
-  if (items.loading != null) {
-    return <>{items.loading}</>;
+  if (!isLoaded) {
+    return <>{"Loading..."}</>;
   }
-  else if(items.hasError === true)
+  else if(error)
   {
     return (
-    <div>
-      {items.message}
-    </div>
+    <>
+      {error.message}
+    </>
     );
   }
   else {
     return (
       <div>
-        {items.list.map((item) => (
+        {items.map((item) => (
           <div key={item.id}>
             <Link to={`/games/${item.name}`} state={{id: item.id}}>Go to item</Link>
             <h1>{item.name}</h1>
