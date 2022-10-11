@@ -1,9 +1,9 @@
-import { render, screen } from '@testing-library/react';
-import App from 'App';
 import React from 'react';
+import { render, screen } from '@testing-library/react';
+import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 
-test('on render the test button is disabled', async () => {
+test('On render the test button is not active', async () => {
   // Arrange
   render(<BrowserRouter><App /></BrowserRouter>);
 
