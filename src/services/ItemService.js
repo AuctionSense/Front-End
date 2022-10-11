@@ -14,9 +14,7 @@ function GetAllItems() {
         headers: {
           "Content-Type": "application/json",
         }
-      });
-    };
-    fetchData()
+      })
       .then((res) => res.json())
       .then(
         (result) => {
@@ -28,6 +26,9 @@ function GetAllItems() {
           setError(error);
         }
       );
+    };
+    fetchData()
+
   }, []);
 
   return {
@@ -51,9 +52,7 @@ function GetAllItemsByCategory(category)
         headers: {
           "Content-Type": "application/json",
         }
-      });
-    };
-    fetchData()
+      })
       .then((res) => res.json())
       .then(
         (result) => {
@@ -65,6 +64,9 @@ function GetAllItemsByCategory(category)
           setError(error);
         }
       );
+    };
+    fetchData()
+
   }, [category]);
 
   return {
@@ -87,9 +89,7 @@ function GetItemById(id) {
         headers: {
           "Content-Type": "application/json",
         }
-      });
-    };
-    fetchData()
+      })
       .then((res) => res.json())
       .then(
         (result) => {
@@ -101,6 +101,10 @@ function GetItemById(id) {
           setError(error);
         }
       );
+    };  
+
+    fetchData()
+
   }, [id]);
 
   return {
