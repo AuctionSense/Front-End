@@ -10,6 +10,8 @@ function App() {
     <div className="App">
       <NavBar />
 
+      <button disabled>test</button>
+
       <Footer />
 
       <Routes>
