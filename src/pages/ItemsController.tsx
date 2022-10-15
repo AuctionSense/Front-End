@@ -28,6 +28,7 @@ function GamesContainer() {
       </div>
     );
   } else if (items)
+  {
     return (
       <div>
         {items.map((item) => (
@@ -41,10 +42,13 @@ function GamesContainer() {
         ))}
       </div>
     );
+  }
   else {
     return (
       <div>
-        <h1>Something unexpected happened!</h1>
+        <h1>
+          Something unexpected happened!
+        </h1>
       </div>
     );
   }

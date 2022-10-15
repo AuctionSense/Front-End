@@ -4,7 +4,7 @@ import Footer from "./components/Footer";
 import GamesContainer from "./pages/ItemsController";
 import HomeContainer from "./pages/HomeController";
 import ItemContainer from "./pages/ItemController";
-import CreateUserForm from "./pages/UserController";
+import CreateUser from "./pages/UserController";
 
 function App() {
   return (
@@ -20,7 +20,7 @@ function App() {
         <Route path="/games" element={<GamesContainer />} />
         {/* <Route path="/cars" element={<Cars />} /> */}
         <Route path="/games/:id" element={<ItemContainer />} />
-        <Route path="/user/create" element={<CreateUserForm />} />
+        <Route path="/user/create" element={<CreateUser />} />
       </Routes>
     </div>
   );

@@ -1,74 +1,111 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import User from "../models/User";
-import CreateUser from "../services/UserService";
+import { UseFetchPost } from "../services/UseFetchApi";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import FormErrors from "../models/FormErrors";
+import { useNavigate } from "react-router-dom";
 
-function CreateUserForm() {
-  console.log("Rerender");
-
-  const [user, setUser] = useState<User>({
-    username: "",
-    password: "",
-    role: "user"
-  });
-  const [isSubmit, setIsSubmit] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string>();
-  const [isLoadedVerified, setIsLoadedVerified] = useState<boolean>();
+function CreateUser() {
+  const [user, setUser] = useState<User>();
+  const {isLoaded, error, data: status }= UseFetchPost("users", user);
+  const [errorApiCall, setErrorApiCall] = useState<Error>();
+  const [isSubmit, setIsSubmit] = useState<boolean>();
+  const [formErrors, setFormErrors] = useState<FormErrors>();
   const navigate = useNavigate();
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUser({ ...user, [event.target.name]: event.target.value });
-  };
+  const schema = yup.object().shape({
+    username: yup
+      .string()
+      .min(4, "Username is too short, it should be a minimum of 4 characters.")
+      .max(16, "Username is too long, it should be a max of 16 characters.")
+      .required("No username provided."),
+    password: yup
+      .string()
+      .min(
+        12,
+        "Password is too short, it should be a minimum of 12 characters."
+      )
+      .max(20, "Password is too long, it can only be a max of 20 characters.")
+      .required("No password provided.")
+      .matches(/[a-zA-Z]/, "Password can only contain Latin letters.")
+      .matches(/[0-9]/, "Password requires a number")
+      .matches(/[^\w]/, "Password requires a symbol")
+      .matches(/[A-Z]/, "Password requires an uppercase letter"),
+    confirmPassword: yup
+      .string()
+      .oneOf([yup.ref("password"), null], 'Must match "password" field value'),
+  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ resolver: yupResolver(schema) });
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const onSubmit = (data: any) => {
+    setUser({ username: data.username, password: data.password });
+
     setIsSubmit(true);
   };
 
   useEffect(() => {
     if (isSubmit)
     {
-      const {errorVerified, isLoaded, statusVerified} = CreateUser(user);
-      setIsLoadedVerified(isLoaded);
-      setErrorMessage(errorVerified.message);
+      if (error)
+      {
+        setErrorApiCall(error);
+      }
+  
       if (isLoaded)
       {
-        if (!errorVerified.message)
+        if (status === 201)
         {
-          console.log(statusVerified)
           navigate('/');
         }
       }
     }
-  }, [isSubmit, navigate, user]);
+    if (
+      errors.username?.message ||
+      errors.password?.message ||
+      errors.confirmPassword?.message
+    ) {
+      setFormErrors({
+        username: errors.username?.message?.toString(),
+        password: errors.password?.message?.toString(),
+        confirmPassword: errors.confirmPassword?.message?.toString(),
+      });
+    }
+  }, [errors, isSubmit, isLoaded, error, status, navigate]);
+
+ 
 
   return (
-    <>
-    {isLoadedVerified === true && <h2>Loading...</h2>}
-    {errorMessage && <h2>{errorMessage}</h2>}
-    <form onSubmit={(e) => handleSubmit(e)}>
-      <label>
-        Enter your username:
+    <div>
+      <p>{errorApiCall?.message}</p>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <input
           type="text"
-          name="username"
-          value={user?.username || ""}
-          onChange={handleChange}
+          placeholder="Enter username..."
+          {...register("username")}
         />
-      </label>
-      <label>
-        Enter your password:
+        <p>{formErrors?.username}</p>
         <input
-          type="text"
-          name="password"
-          value={user?.password || ""}
-          onChange={handleChange}
+          type="password"
+          placeholder="Enter password..."
+          {...register("password")}
         />
-      </label>
-      <input type="submit" />
-    </form>
-    </>
+        <p>{formErrors?.password}</p>
+        <input
+          type="password"
+          placeholder="Confirm password..."
+          {...register("confirmPassword")}
+        />
+        <p>{formErrors?.confirmPassword}</p>
+        <input type="submit" />
+      </form>
+    </div>
   );
 }
 
-export default CreateUserForm;
+export default CreateUser;
