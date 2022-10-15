@@ -1,13 +1,20 @@
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import Category from "../models/Category";
-import { GetAllItemsByCategory } from "../services/ItemService";
+import Item from "../models/Item";
+import UseFetchGet from "../services/UseFetchApi";
 
 function GamesContainer() {
   const location = useLocation();
-  let category: Category = { name: "" };
-  category.name = location.pathname.replace("/", "");
-  const { error, isLoaded, items } = GetAllItemsByCategory(category);
+  const [items, setItems] = useState<Item[]>([]);
+  const { error, isLoaded, data } = UseFetchGet(`items/category=${location.pathname.replace("/", "")}`);
 
+  useEffect(() => {
+    if (data)
+    {
+      setItems(data);
+    }
+  }, [data])
+ 
   if (!isLoaded) {
     return (
       <div>
@@ -21,6 +28,7 @@ function GamesContainer() {
       </div>
     );
   } else if (items)
+  {
     return (
       <div>
         {items.map((item) => (
@@ -34,10 +42,13 @@ function GamesContainer() {
         ))}
       </div>
     );
+  }
   else {
     return (
       <div>
-        <h1>Something unexpected happened!</h1>
+        <h1>
+          Something unexpected happened!
+        </h1>
       </div>
     );
   }

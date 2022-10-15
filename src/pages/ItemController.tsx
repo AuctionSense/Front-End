@@ -1,11 +1,19 @@
 import Item from "../models/Item";
 import { useLocation } from "react-router-dom";
-import { GetItemById } from "../services/ItemService";
+import UseFetchGet from "../services/UseFetchApi";
+import { useEffect, useState } from "react";
 
 function ItemContainer() {
-  let iItem: Item = { id: "", name: "", description: "", category: "" };
-  iItem.id = useLocation().state?.id;
-  const { error, isLoaded, item } = GetItemById(iItem);
+  const [item, setItem] = useState<Item>();
+  const { error, isLoaded, data } = UseFetchGet(`items/id=${useLocation().state?.id}`);
+
+  useEffect(() => {
+    if (data)
+    {
+      setItem(data);
+    }  
+  }, [data])
+  
 
   if (!isLoaded) {
     return (

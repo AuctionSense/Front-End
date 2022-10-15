@@ -1,9 +1,10 @@
 import { Route, Routes } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
-import GamesContainer from "./pages/GamesContainer";
-import HomeContainer from "./pages/HomeContainer";
-import ItemContainer from "./pages/ItemContainer";
+import GamesContainer from "./pages/ItemsController";
+import HomeContainer from "./pages/HomeController";
+import ItemContainer from "./pages/ItemController";
+import CreateUser from "./pages/UserController";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/games" element={<GamesContainer />} />
         {/* <Route path="/cars" element={<Cars />} /> */}
         <Route path="/games/:id" element={<ItemContainer />} />
+        <Route path="/user/create" element={<CreateUser />} />
       </Routes>
     </div>
   );
