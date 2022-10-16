@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import styles from "../App.module.css";
 
 function NavBar() {
+  // GET ALL CATEGORIES HERE FROM BACK-END AND SHOW A LINK UNDER CATEGORY
+
   return (
     <nav className={styles.navBarTop}>
       <div>
@@ -16,9 +18,6 @@ function NavBar() {
             <div className={styles.dropDownContent}>
               <Link className={styles.dropDownContentLink} to="/games">
                 Games
-              </Link>
-              <Link className={styles.dropDownContentLink} to="/cars">
-                Cars
               </Link>
             </div>
           </li>

@@ -18,7 +18,6 @@ function App() {
       <Routes>
         <Route path="/" element={<HomeContainer />} />
         <Route path="/games" element={<GamesContainer />} />
-        {/* <Route path="/cars" element={<Cars />} /> */}
         <Route path="/games/:id" element={<ItemContainer />} />
         <Route path="/user/create" element={<CreateUser />} />
       </Routes>
