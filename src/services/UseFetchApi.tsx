@@ -47,7 +47,7 @@ function UseFetchGet(apiDestination: string) {
  */
 function UseFetchPost(apiDestination: string, object: any)
 {
-  const [data, setData] = useState<number>();
+  const [data, setData] = useState(null);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [error, setError] = useState<Error>();
 
@@ -66,10 +66,10 @@ function UseFetchPost(apiDestination: string, object: any)
         },
         body: JSON.stringify(object)
       })
-      .then((response) => response.status)
-      .then((status) => {
+      .then((response) => response.json())
+      .then((data) => {
         setIsLoaded(true);
-        setData(status);
+        setData(data);
       })
       .catch((err) => {
         setIsLoaded(true);

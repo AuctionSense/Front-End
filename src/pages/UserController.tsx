@@ -6,11 +6,13 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import FormErrors from "../models/FormErrors";
 import { useNavigate } from "react-router-dom";
+import ApiResult from "../models/ApiResult";
 
 function CreateUser() {
   // Hooks
   const [user, setUser] = useState<User>();
-  const {isLoaded, error, data: status }= UseFetchPost("users", user);
+  const [apiResult, setApiResult] = useState<ApiResult>();
+  const {isLoaded, error, data }= UseFetchPost("users", user);
   const [errorApiCall, setErrorApiCall] = useState<Error>();
   const [isSubmit, setIsSubmit] = useState<boolean>();
   const [formErrors, setFormErrors] = useState<FormErrors>();
@@ -58,6 +60,9 @@ function CreateUser() {
   useEffect(() => {
     // If form is submit API call will be made at beginning of file (UseFetchPost).
     // Here error will be checked and if status is 201(created) the user will be redirected to home page.
+    if (data){
+      setApiResult(data);
+    }
     if (isSubmit)
     {
       if (error)
@@ -67,9 +72,12 @@ function CreateUser() {
   
       if (isLoaded)
       {
-        if (status === 201)
+        if (apiResult?.success)
         {
           navigate('/');
+        }
+        else if (apiResult?.message) {
+          setErrorApiCall({name: "error", message: apiResult.message});
         }
       }
     }
@@ -86,7 +94,7 @@ function CreateUser() {
         confirmPassword: errors.confirmPassword?.message?.toString(),
       });
     }
-  }, [errors, isSubmit, isLoaded, error, status, navigate]);
+  }, [errors, isSubmit, isLoaded, error, data, apiResult,navigate]);
 
  
 
