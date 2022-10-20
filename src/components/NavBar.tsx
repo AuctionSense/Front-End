@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import styles from "../App.module.css";
-import { doLogin, getToken } from "../services/KeyCloakService";
+import { doLogin, doLogout, getToken } from "../services/KeyCloakService";
 
 function NavBar() {
   // GET ALL CATEGORIES HERE FROM BACK-END AND SHOW A LINK UNDER CATEGORY
@@ -35,6 +35,11 @@ function NavBar() {
           <li className={styles.navBarTopEnd}>
               <button onClick={() => getToken()}>
                 token
+              </button>
+          </li>
+          <li className={styles.navBarTopEnd}>
+              <button onClick={() => doLogout()}>
+                logout
               </button>
           </li>
         </ul>

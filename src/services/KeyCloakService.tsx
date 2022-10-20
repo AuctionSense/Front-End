@@ -29,6 +29,15 @@ const doLogin = () =>
     _kc.login();
 }
 
+const doLogout = () =>
+{
+    if (!_kc.authenticated) {
+        console.log("Not logged in.")
+        return;
+    }
+    _kc.logout();
+}
+
 const getToken = () =>
 {
     if (!_kc.authenticated) {
@@ -41,4 +50,5 @@ const getToken = () =>
 
 export default initKeyCloak;
 export { doLogin };
+export { doLogout };
 export { getToken };
