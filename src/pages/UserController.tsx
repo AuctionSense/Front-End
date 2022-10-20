@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import User from "../models/User";
 import { UseFetchPost } from "../services/UseFetchApi";
@@ -126,4 +126,22 @@ function CreateUser() {
   );
 }
 
-export default CreateUser;
+function LoginUser()
+{
+
+  const login = useCallback(() => {
+  }, [])
+
+
+
+  return (
+    <div>
+      <button type="button" onClick={login}>
+        Login 
+      </button>
+    </div>
+  )
+}
+
+export default LoginUser;
+export {CreateUser};

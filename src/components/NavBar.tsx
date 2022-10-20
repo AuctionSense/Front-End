@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import styles from "../App.module.css";
+import { doLogin, getToken } from "../services/KeyCloakService";
 
 function NavBar() {
   // GET ALL CATEGORIES HERE FROM BACK-END AND SHOW A LINK UNDER CATEGORY
@@ -25,6 +26,16 @@ function NavBar() {
             <Link className={styles.navBarTopLink} to="/user/create">
               Create
             </Link>
+          </li>
+          <li className={styles.navBarTopEnd}>
+              <button onClick={() => doLogin()}>
+                Login
+              </button>
+          </li>
+          <li className={styles.navBarTopEnd}>
+              <button onClick={() => getToken()}>
+                token
+              </button>
           </li>
         </ul>
       </div>
