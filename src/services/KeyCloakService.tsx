@@ -44,8 +44,15 @@ const getToken = () =>
         console.log("Not logged in yet.")
         return;
     }
-    console.log(_kc.token);
+    return _kc.token;
 }
+
+// const KeyCloakService = {
+//     initKeyCloak,
+//     doLogin,
+//     doLogout,
+//     getToken
+// }
 
 
 export default initKeyCloak;

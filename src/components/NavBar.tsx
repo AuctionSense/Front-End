@@ -33,7 +33,7 @@ function NavBar() {
               </button>
           </li>
           <li className={styles.navBarTopEnd}>
-              <button onClick={() => getToken()}>
+              <button onClick={() => console.log(getToken())}>
                 token
               </button>
           </li>
