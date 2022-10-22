@@ -4,6 +4,5 @@
   "ssl-required": "external",
   "resource": "auctionsense-front-end",
   "public-client": true,
-  "confidential-port": 0,
-  "policy-enforcer": {}
+  "confidential-port": 0
 }

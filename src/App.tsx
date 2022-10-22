@@ -10,7 +10,7 @@ import UseAdminRequest from "./services/UseFetchApiAuth";
 
 function App() {
   const [isFetchReady, setIsFetchReady] = useState<boolean>(false);
-  const {error, data, isLoaded} = UseAdminRequest("admins/admin", isFetchReady);
+  const {error, data, isLoaded} = UseAdminRequest("admin", isFetchReady);
   const setFetchReady = () => {
     setIsFetchReady(true);
   }

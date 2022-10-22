@@ -24,6 +24,7 @@ const doLogin = () =>
 {
     if (_kc.authenticated) {
         console.log("Already logged in.")
+        console.log(JSON.stringify(_kc.tokenParsed))
         return;
     }
     _kc.login();
