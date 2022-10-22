@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import User from "../models/User";
 import { UseFetchPost } from "../services/UseFetchApi";
@@ -6,15 +6,19 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import FormErrors from "../models/FormErrors";
 import { useNavigate } from "react-router-dom";
+import ApiResult from "../models/ApiResult";
 
 function CreateUser() {
+  // Hooks
   const [user, setUser] = useState<User>();
-  const {isLoaded, error, data: status }= UseFetchPost("users", user);
+  const [apiResult, setApiResult] = useState<ApiResult>();
+  const {isLoaded, error, data }= UseFetchPost("users", user);
   const [errorApiCall, setErrorApiCall] = useState<Error>();
   const [isSubmit, setIsSubmit] = useState<boolean>();
   const [formErrors, setFormErrors] = useState<FormErrors>();
   const navigate = useNavigate();
 
+  // Schema using yup.
   const schema = yup.object().shape({
     username: yup
       .string()
@@ -37,12 +41,16 @@ function CreateUser() {
       .string()
       .oneOf([yup.ref("password"), null], 'Must match "password" field value'),
   });
+
+  // Another hook but schema above is needed.
+  // Libraries: useForm, Yup and a library that uses the yup schema as resolver for useForms.
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
+  // Data is the object made using register variable in the form below.
   const onSubmit = (data: any) => {
     setUser({ username: data.username, password: data.password });
 
@@ -50,6 +58,11 @@ function CreateUser() {
   };
 
   useEffect(() => {
+    // If form is submit API call will be made at beginning of file (UseFetchPost).
+    // Here error will be checked and if status is 201(created) the user will be redirected to home page.
+    if (data){
+      setApiResult(data);
+    }
     if (isSubmit)
     {
       if (error)
@@ -59,12 +72,17 @@ function CreateUser() {
   
       if (isLoaded)
       {
-        if (status === 201)
+        if (apiResult?.success)
         {
           navigate('/');
         }
+        else if (apiResult?.message) {
+          setErrorApiCall({name: "error", message: apiResult.message});
+        }
       }
     }
+
+    // If formstate has errors according to yup schema, than set these errors.
     if (
       errors.username?.message ||
       errors.password?.message ||
@@ -76,7 +94,7 @@ function CreateUser() {
         confirmPassword: errors.confirmPassword?.message?.toString(),
       });
     }
-  }, [errors, isSubmit, isLoaded, error, status, navigate]);
+  }, [errors, isSubmit, isLoaded, error, data, apiResult,navigate]);
 
  
 
@@ -87,7 +105,7 @@ function CreateUser() {
         <input
           type="text"
           placeholder="Enter username..."
-          {...register("username")}
+          {...register("username")} // Each register in this form creates properties in object and can be used in onSubmit function.
         />
         <p>{formErrors?.username}</p>
         <input
@@ -108,4 +126,22 @@ function CreateUser() {
   );
 }
 
-export default CreateUser;
+function LoginUser()
+{
+
+  const login = useCallback(() => {
+  }, [])
+
+
+
+  return (
+    <div>
+      <button type="button" onClick={login}>
+        Login 
+      </button>
+    </div>
+  )
+}
+
+export default LoginUser;
+export {CreateUser};

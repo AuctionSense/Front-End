@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
 
+/** Fetches data from the given destination.
+ * 
+ * @param apiDestination The destination for fetching the data. Example: items/category=games
+ * @returns If the data has loaded, error if there is an error and data if there is data.
+ */
 function UseFetchGet(apiDestination: string) {
   const [data, setData] = useState(null);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
@@ -33,14 +38,22 @@ function UseFetchGet(apiDestination: string) {
   return { isLoaded, error, data };
 }
 
+
+/** Post data on the given destination.
+ * 
+ * @param apiDestination The destination for fetching the data. Example: user/id=uuid
+ * @param object This can be any type of object (preferable json).
+ * @returns If the data has loaded, error if there is an error and data if there is data.
+ */
 function UseFetchPost(apiDestination: string, object: any)
 {
-  const [data, setData] = useState<number>();
+  const [data, setData] = useState(null);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [error, setError] = useState<Error>();
 
   useEffect(() => {
     const postData = async () => {
+      // This check is for hooks at top of a file so it doesn't send an unnecessary request.
       if (!object)
       {
         return;
@@ -53,10 +66,10 @@ function UseFetchPost(apiDestination: string, object: any)
         },
         body: JSON.stringify(object)
       })
-      .then((response) => response.status)
-      .then((status) => {
+      .then((response) => response.json())
+      .then((data) => {
         setIsLoaded(true);
-        setData(status);
+        setData(data);
       })
       .catch((err) => {
         setIsLoaded(true);

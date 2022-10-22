@@ -4,23 +4,33 @@ import Footer from "./components/Footer";
 import GamesContainer from "./pages/ItemsController";
 import HomeContainer from "./pages/HomeController";
 import ItemContainer from "./pages/ItemController";
-import CreateUser from "./pages/UserController";
+import LoginUser, {CreateUser} from "./pages/UserController";
+import { useState } from "react";
+import UseAdminRequest from "./services/UseFetchApiAuth";
 
 function App() {
-  return (
+  const [isFetchReady, setIsFetchReady] = useState<boolean>(false);
+  const {error, data, isLoaded} = UseAdminRequest("admin", isFetchReady);
+  const setFetchReady = () => {
+    setIsFetchReady(true);
+    console.log(error, data, isLoaded)
+  }
+
+   return (
     <div className="App">
       <NavBar />
 
       <button disabled>test</button>
+      <button onClick={() => setFetchReady()}>fetchApiAdmin</button>
 
       <Footer />
 
       <Routes>
         <Route path="/" element={<HomeContainer />} />
         <Route path="/games" element={<GamesContainer />} />
-        {/* <Route path="/cars" element={<Cars />} /> */}
         <Route path="/games/:id" element={<ItemContainer />} />
         <Route path="/user/create" element={<CreateUser />} />
+        <Route path="/user/login" element={<LoginUser />} />
       </Routes>
     </div>
   );
