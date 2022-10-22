@@ -5,7 +5,7 @@ import GamesContainer from "./pages/ItemsController";
 import HomeContainer from "./pages/HomeController";
 import ItemContainer from "./pages/ItemController";
 import LoginUser, {CreateUser} from "./pages/UserController";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import UseAdminRequest from "./services/UseFetchApiAuth";
 
 function App() {
@@ -13,6 +13,7 @@ function App() {
   const {error, data, isLoaded} = UseAdminRequest("admin", isFetchReady);
   const setFetchReady = () => {
     setIsFetchReady(true);
+    console.log(error, data, isLoaded)
   }
 
    return (
