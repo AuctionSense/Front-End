@@ -4,7 +4,6 @@ import Footer from "./components/Footer";
 import GamesContainer from "./pages/ItemsController";
 import HomeContainer from "./pages/HomeController";
 import ItemContainer from "./pages/ItemController";
-import LoginUser, {CreateUser} from "./pages/UserController";
 import { useState } from "react";
 import UseAdminRequest from "./services/UseFetchApiAuth";
 
@@ -29,8 +28,6 @@ function App() {
         <Route path="/" element={<HomeContainer />} />
         <Route path="/games" element={<GamesContainer />} />
         <Route path="/games/:id" element={<ItemContainer />} />
-        <Route path="/user/create" element={<CreateUser />} />
-        <Route path="/user/login" element={<LoginUser />} />
       </Routes>
     </div>
   );

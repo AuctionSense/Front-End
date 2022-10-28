@@ -23,11 +23,6 @@ function NavBar() {
             </div>
           </li>
           <li className={styles.navBarTopEnd}>
-            <Link className={styles.navBarTopLink} to="/user/create">
-              Create
-            </Link>
-          </li>
-          <li className={styles.navBarTopEnd}>
               <button onClick={() => KeyCloakService.doLogin()}>
                 Login
               </button>
