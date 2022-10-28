@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getToken } from "./KeyCloakService";
+import KeyCloakService from "./KeyCloakService";
 
 function UseAdminRequest(apiDestination: string, isFetchReady: boolean) {
 
@@ -20,7 +20,7 @@ function UseAdminRequest(apiDestination: string, isFetchReady: boolean) {
           mode: "cors",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": "Bearer " + getToken()
+            "Authorization": "Bearer " + KeyCloakService.getToken()
           },
         }
       )
