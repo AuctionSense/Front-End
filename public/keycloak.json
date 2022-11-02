@@ -1,8 +1,8 @@
 {
-  "realm": "quarkus",
+  "realm": "AuctionSense",
   "auth-server-url": "http://localhost:8484/",
   "ssl-required": "external",
-  "resource": "auctionsense-front-end",
+  "resource": "frontend-service",
   "public-client": true,
   "confidential-port": 0
 }

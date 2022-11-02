@@ -5,6 +5,8 @@ const _kc = new Keycloak("/keycloak.json")
 const initKeyCloak = () => {
     _kc.init({
         onLoad: "check-sso",
+        silentCheckSsoRedirectUri: window.location.origin + "/silent-check-sso.html",
+        pkceMethod: "S256"
     })
     .then((authenticated) => {
         if (authenticated)
@@ -48,15 +50,11 @@ const getToken = () =>
     return _kc.token;
 }
 
-// const KeyCloakService = {
-//     initKeyCloak,
-//     doLogin,
-//     doLogout,
-//     getToken
-// }
+const KeyCloakService = {
+    initKeyCloak,
+    doLogin,
+    doLogout,
+    getToken
+}
 
-
-export default initKeyCloak;
-export { doLogin };
-export { doLogout };
-export { getToken };
+export default KeyCloakService;
