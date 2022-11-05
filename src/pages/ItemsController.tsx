@@ -6,7 +6,7 @@ import UseFetchGet from "../services/UseFetchApi";
 function GamesContainer() {
   const location = useLocation();
   const [items, setItems] = useState<Item[]>([]);
-  const { error, isLoaded, data } = UseFetchGet(`items/category=${location.pathname.replace("/", "")}`);
+  const { error, isLoaded, data } = UseFetchGet(`all/items/category=${location.pathname.replace("/", "")}`);
 
   useEffect(() => {
     if (data)

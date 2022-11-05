@@ -9,8 +9,6 @@ import UsernameNavBar from "./UsernameNavBar";
 function NavBar() {
   // GET ALL CATEGORIES HERE FROM BACK-END AND SHOW A LINK UNDER CATEGORY
 
-  console.log(KeyCloakService.isLoggedIn());
-
   let button = <LoginButton />; 
   let username;
   let addBalance;

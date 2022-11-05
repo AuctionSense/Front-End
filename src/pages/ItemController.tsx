@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 function ItemContainer() {
   const [item, setItem] = useState<Item>();
-  const { error, isLoaded, data } = UseFetchGet(`items/id=${useLocation().state?.id}`);
+  const { error, isLoaded, data } = UseFetchGet(`all/items/id=${useLocation().state?.id}`);
 
   useEffect(() => {
     if (data)
@@ -24,7 +24,7 @@ function ItemContainer() {
   } else if (error) {
     return (
       <div>
-        <h1>{error.message}</h1>
+        <h1>Couldn't load data, try reloading the page or going back to the home page.</h1>
       </div>
     );
   } else if (item) {
