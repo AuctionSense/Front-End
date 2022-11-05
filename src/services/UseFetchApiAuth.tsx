@@ -18,7 +18,7 @@ function UseFetchAuthGet(apiDestination: string, isFetchReady: boolean) {
           mode: "cors",
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer " + KeyCloakService.getToken(),
+            "Authorization": "Bearer " + KeyCloakService.getToken(),
           },
         }
       )

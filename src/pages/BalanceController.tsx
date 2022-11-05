@@ -45,13 +45,14 @@ function BalanceContainer() {
   };
 
   useEffect(() => {
-    if (data) {
-      setBalance(data.balance);
+
+    if (isLoaded && data) {
+        setBalance(data.balance);
     }
     if (isSubmit) {
       // API ERROR CALL OR SUCCESS
     }
-  }, [isSubmit, data]);
+  }, [isSubmit, isLoaded, data]);
 
   if (!KeyCloakService.isLoggedIn()) {
     return <HomeContainer />;
