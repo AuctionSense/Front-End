@@ -6,10 +6,12 @@ import HomeContainer from "./pages/HomeController";
 import ItemContainer from "./pages/ItemController";
 import { useState } from "react";
 import UseAdminRequest from "./services/UseFetchApiAuth";
+import BalanceContainer from "./pages/BalanceController";
 
 function App() {
   const [isFetchReady, setIsFetchReady] = useState<boolean>(false);
   const {error, data, isLoaded} = UseAdminRequest("admin", isFetchReady);
+
   const setFetchReady = () => {
     setIsFetchReady(true);
     console.log(error, data, isLoaded)
@@ -28,6 +30,7 @@ function App() {
         <Route path="/" element={<HomeContainer />} />
         <Route path="/games" element={<GamesContainer />} />
         <Route path="/games/:id" element={<ItemContainer />} />
+        <Route path="/balance" element={<BalanceContainer />} />
       </Routes>
     </div>
   );

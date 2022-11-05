@@ -2,20 +2,18 @@ import Keycloak from "keycloak-js";
 
 const _kc = new Keycloak("/keycloak.json")
 
-const initKeyCloak = () => {
+const initKeyCloak = (onAuthenticatedCallback: any) => {
     _kc.init({
         onLoad: "check-sso",
         silentCheckSsoRedirectUri: window.location.origin + "/silent-check-sso.html",
         pkceMethod: "S256"
     })
     .then((authenticated) => {
-        if (authenticated)
+        if (!authenticated)
         {
-            console.log("Authenticated")
-        }
-        else {
             console.log("Not Authenticated!")
         }
+        onAuthenticatedCallback();
     })
     .catch(() => {
         alert("failed to initialize!");
@@ -26,7 +24,6 @@ const doLogin = () =>
 {
     if (_kc.authenticated) {
         console.log("Already logged in.")
-        console.log(JSON.stringify(_kc.tokenParsed))
         return;
     }
     _kc.login();
@@ -50,11 +47,19 @@ const getToken = () =>
     return _kc.token;
 }
 
+const isLoggedIn = () => {
+    return _kc.authenticated
+};
+
+const getUsername = () => _kc.tokenParsed?.preferred_username;
+
 const KeyCloakService = {
     initKeyCloak,
     doLogin,
     doLogout,
-    getToken
+    getToken,
+    getUsername,
+    isLoggedIn
 }
 
 export default KeyCloakService;

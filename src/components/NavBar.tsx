@@ -1,9 +1,26 @@
 import { Link } from "react-router-dom";
 import styles from "../App.module.css";
 import KeyCloakService from "../services/KeyCloakService";
+import BalanceNavBar from "./BalanceNavBar";
+import LoginButton from "./Buttons/LoginButton";
+import LogoutButton from "./Buttons/logoutButton";
+import UsernameNavBar from "./UsernameNavBar";
 
 function NavBar() {
   // GET ALL CATEGORIES HERE FROM BACK-END AND SHOW A LINK UNDER CATEGORY
+
+  console.log(KeyCloakService.isLoggedIn());
+
+  let button = <LoginButton />; 
+  let username;
+  let addBalance;
+  
+  if (KeyCloakService.isLoggedIn())
+  {
+    button = <LogoutButton />;
+    username = <UsernameNavBar />
+    addBalance = <BalanceNavBar />
+  }
 
   return (
     <nav className={styles.navBarTop}>
@@ -23,20 +40,10 @@ function NavBar() {
             </div>
           </li>
           <li className={styles.navBarTopEnd}>
-              <button onClick={() => KeyCloakService.doLogin()}>
-                Login
-              </button>
+            {button}
           </li>
-          <li className={styles.navBarTopEnd}>
-              <button onClick={() => console.log(KeyCloakService.getToken())}>
-                token
-              </button>
-          </li>
-          <li className={styles.navBarTopEnd}>
-              <button onClick={() => KeyCloakService.doLogout()}>
-                logout
-              </button>
-          </li>
+          {username}
+          {addBalance}
         </ul>
       </div>
     </nav>
