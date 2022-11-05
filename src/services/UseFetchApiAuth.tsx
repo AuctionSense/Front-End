@@ -1,18 +1,16 @@
 import { useEffect, useState } from "react";
 import KeyCloakService from "./KeyCloakService";
 
-function UseAdminRequest(apiDestination: string, isFetchReady: boolean) {
-
-    const [data, setData] = useState(null);
+function UseFetchAuthGet(apiDestination: string, isFetchReady: boolean) {
+  const [data, setData] = useState<any>(null);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [error, setError] = useState<Error>();
 
   useEffect(() => {
     const fetchData = async () => {
-        if (!isFetchReady)
-{
-    return;
-}
+      if (!isFetchReady) {
+        return;
+      }
       return await fetch(
         process.env.REACT_APP_BASE_URL_DEVELOPMENT + apiDestination,
         {
@@ -20,7 +18,7 @@ function UseAdminRequest(apiDestination: string, isFetchReady: boolean) {
           mode: "cors",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": "Bearer " + KeyCloakService.getToken()
+            Authorization: "Bearer " + KeyCloakService.getToken(),
           },
         }
       )
@@ -40,4 +38,4 @@ function UseAdminRequest(apiDestination: string, isFetchReady: boolean) {
   return { isLoaded, error, data };
 }
 
-export default UseAdminRequest;
+export default UseFetchAuthGet;

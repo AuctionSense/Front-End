@@ -5,12 +5,12 @@ import GamesContainer from "./pages/ItemsController";
 import HomeContainer from "./pages/HomeController";
 import ItemContainer from "./pages/ItemController";
 import { useState } from "react";
-import UseAdminRequest from "./services/UseFetchApiAuth";
+import UseFetchAuthGet from "./services/UseFetchApiAuth";
 import BalanceContainer from "./pages/BalanceController";
 
 function App() {
   const [isFetchReady, setIsFetchReady] = useState<boolean>(false);
-  const {error, data, isLoaded} = UseAdminRequest("admin", isFetchReady);
+  const {error, data, isLoaded} = UseFetchAuthGet("admin", isFetchReady);
 
   const setFetchReady = () => {
     setIsFetchReady(true);
