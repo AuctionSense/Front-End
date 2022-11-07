@@ -5,12 +5,15 @@ import { useEffect, useState } from "react";
  * @param apiDestination The destination for fetching the data. Example: items/category=games
  * @returns If the data has loaded, error if there is an error and data if there is data.
  */
-function UseFetchGet(apiDestination: string) {
-  const [data, setData] = useState(null);
+function UseFetchGet(apiDestination: string, isFetchReady: boolean) {
+  const [data, setData] = useState<any>(null);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [error, setError] = useState<Error>();
 
   useEffect(() => {
+    if (!isFetchReady) {
+      return;
+    }
     const fetchData = async () => {
       return await fetch(
         process.env.REACT_APP_BASE_URL_DEVELOPMENT + apiDestination,
@@ -33,7 +36,7 @@ function UseFetchGet(apiDestination: string) {
         });
     };
     fetchData();
-  }, [apiDestination]);
+  }, [isFetchReady, apiDestination]);
 
   return { isLoaded, error, data };
 }
