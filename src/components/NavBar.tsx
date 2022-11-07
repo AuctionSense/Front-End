@@ -32,7 +32,7 @@ function NavBar() {
           <li className={`${styles.dropDown} ${styles.navBarTopFront}`}>
             <p>Category</p>
             <div className={styles.dropDownContent}>
-              <Link className={styles.dropDownContentLink} to="/games">
+              <Link className={styles.dropDownContentLink} to={`/games`} state={{category: "games"}}>
                 Games
               </Link>
             </div>

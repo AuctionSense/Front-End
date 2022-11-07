@@ -3,10 +3,11 @@ import { Link, useLocation } from "react-router-dom";
 import Item from "../models/Item";
 import UseFetchGet from "../services/UseFetchApi";
 
-function GamesContainer() {
+function CategoryContainer() {
   const location = useLocation();
   const [items, setItems] = useState<Item[]>([]);
   const { error, isLoaded, data } = UseFetchGet(`all/items/category=${location.pathname.replace("/", "")}`);
+  const category = useLocation().state?.category;
 
   useEffect(() => {
     if (data)
@@ -33,7 +34,7 @@ function GamesContainer() {
       <div>
         {items.map((item) => (
           <div key={item.id}>
-            <Link to={`/games/${item.name}`} state={{ id: item.id }}>
+            <Link to={`/${category}/${item.name}`} state={{ id: item.id, category: category }}>
               Go to item
             </Link>
             <h1>{item.name}</h1>
@@ -54,4 +55,4 @@ function GamesContainer() {
   }
 }
 
-export default GamesContainer;
+export default CategoryContainer;
