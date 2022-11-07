@@ -11,7 +11,7 @@ function BalanceContainer() {
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
   const [balance, setBalance] = useState<string>();
   const { data, error, isLoaded } = UseFetchAuthGet(`user/balance/${KeyCloakService.getUsername()}`, true);
-  const { data: newBalance, error: authError, isLoaded: isLoadedAuth } = UseFetchAuthPut(`user/balance/${KeyCloakService.getUsername()}/${amount}`, isSubmit);
+  const { data: newB, error: authError, isLoaded: isLoadedAuth } = UseFetchAuthPut(`user/balance/${KeyCloakService.getUsername()}/${amount}`, isSubmit);
 
   let patternTwoDigisAfterComma = /^\d+(\.\d{0,2})?$/;
 
@@ -57,8 +57,13 @@ function BalanceContainer() {
     else {
       setBalance("Loading..");
     }
+    if (newB)
+    {
+      setBalance(newB.newBalance);
+      setIsSubmit(false);
+    }
 
-  }, [isLoaded, data, error]);
+  }, [newB, isLoaded, data, error]);
 
   if (!KeyCloakService.isLoggedIn()) {
     return <HomeContainer />;

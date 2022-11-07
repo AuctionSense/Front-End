@@ -40,7 +40,7 @@ function UseFetchAuthGet(apiDestination: string, isFetchReady: boolean) {
 
 function UseFetchAuthPut(apiDestination: string, object: any)
 {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<any>(null);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [error, setError] = useState<Error>();
 
@@ -73,7 +73,7 @@ function UseFetchAuthPut(apiDestination: string, object: any)
 
     postData();
   }, [apiDestination, object])
-  
+
   return { isLoaded, error, data }
 }
 
