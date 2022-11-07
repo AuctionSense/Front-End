@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Item from "../models/Item";
 import UseFetchGet from "../services/UseFetchApi";
 
@@ -11,6 +11,7 @@ function CategoryContainer() {
   const [isItemsSet, setIsItemsSet] = useState<boolean>(false);
   const { error, data, isLoaded } = UseFetchGet(`all/items/category=${category}`, isFetchReady);
 
+  setIsFetchReady(true);
   useEffect(() => {
     if (items.length === 0 && isItemsSet)
     {

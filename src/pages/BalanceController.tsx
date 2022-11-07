@@ -13,6 +13,8 @@ function BalanceContainer() {
   const { data, error, isLoaded } = UseFetchAuthGet(`user/balance/${KeyCloakService.getUsername()}`, true);
   const { data: newB, error: authError, isLoaded: isLoadedAuth } = UseFetchAuthPut(`user/balance/${KeyCloakService.getUsername()}/${amount}`, isSubmit);
 
+  console.log(authError, isLoadedAuth);
+
   let patternTwoDigisAfterComma = /^\d+(\.\d{0,2})?$/;
 
   const schema = yup.object().shape({

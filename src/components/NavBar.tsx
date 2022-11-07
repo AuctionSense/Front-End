@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { isTemplateSpan } from "typescript";
 import styles from "../App.module.css";
 import Category from "../models/Category";
 import KeyCloakService from "../services/KeyCloakService";
@@ -14,6 +13,9 @@ function NavBar() {
   const [isFetchReady, setIsFetchReady] = useState<boolean>(true);
   const [categories, setCategories] = useState<Category[]>([]);
   const { data, isLoaded, error } = UseFetchGet("all/categories", isFetchReady);
+
+  console.log(isLoaded, error)
+  setIsFetchReady(true);
 
   let button = <LoginButton />;
   let username;
