@@ -38,7 +38,7 @@ function UseFetchAuthGet(apiDestination: string, isFetchReady: boolean) {
   return { isLoaded, error, data };
 }
 
-function UseFetchAuthPost(apiDestination: string, object: any)
+function UseFetchAuthPut(apiDestination: string, object: any)
 {
   const [data, setData] = useState(null);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
@@ -52,7 +52,7 @@ function UseFetchAuthPost(apiDestination: string, object: any)
         return;
       }
       return await fetch(process.env.REACT_APP_BASE_URL_DEVELOPMENT + apiDestination, {
-        method: "POST",
+        method: "PUT",
         mode: "cors",
         headers: {
           "Content-Type": "application/json",
@@ -78,4 +78,4 @@ function UseFetchAuthPost(apiDestination: string, object: any)
 }
 
 export default UseFetchAuthGet;
-export { UseFetchAuthPost };
+export { UseFetchAuthPut };

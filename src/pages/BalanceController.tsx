@@ -4,14 +4,14 @@ import HomeContainer from "./HomeController";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import UseFetchAuthGet, { UseFetchAuthPost } from "../services/UseFetchApiAuth";
+import UseFetchAuthGet, { UseFetchAuthPut } from "../services/UseFetchApiAuth";
 
 function BalanceContainer() {
   const [amount, setAmount] = useState<string>();
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
   const [balance, setBalance] = useState<string>();
   const { data, error, isLoaded } = UseFetchAuthGet(`user/balance/${KeyCloakService.getUsername()}`, true);
-  const { data: newBalance, error: authError, isLoaded: isLoadedAuth } = UseFetchAuthPost(`user/balance/${KeyCloakService.getUsername()}/${amount}`, isSubmit);
+  const { data: newBalance, error: authError, isLoaded: isLoadedAuth } = UseFetchAuthPut(`user/balance/${KeyCloakService.getUsername()}/${amount}`, isSubmit);
 
   let patternTwoDigisAfterComma = /^\d+(\.\d{0,2})?$/;
 
