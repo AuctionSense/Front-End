@@ -1,20 +1,28 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import Item from "../models/Item";
 import UseFetchGet from "../services/UseFetchApi";
 
 function CategoryContainer() {
-  const location = useLocation();
+  const navigate = useNavigate();
+  const { category } = useParams();
+  const [isFetchReady, setIsFetchReady] = useState<boolean>(true);
   const [items, setItems] = useState<Item[]>([]);
-  const { error, isLoaded, data } = UseFetchGet(`all/items/category=${location.state?.category}`);
-  const category = useLocation().state?.category;
+  const [isItemsSet, setIsItemsSet] = useState<boolean>(false);
+  const { error, data, isLoaded } = UseFetchGet(`all/items/category=${category}`, isFetchReady);
 
   useEffect(() => {
+    if (items.length === 0 && isItemsSet)
+    {
+      navigate("/404", {replace: true});
+    }
+
     if (data)
     {
       setItems(data);
+      setIsItemsSet(true);
     }
-  }, [data])
+  }, [data, navigate, items, isLoaded, isItemsSet])
  
   if (!isLoaded) {
     return (
@@ -34,7 +42,7 @@ function CategoryContainer() {
       <div>
         {items.map((item) => (
           <div key={item.id}>
-            <Link to={`/c/${category}/${item.name}`} state={{ id: item.id }}>
+            <Link to={`/c/${category}/${item.name}`}>
               Go to item
             </Link>
             <h1>{item.name}</h1>

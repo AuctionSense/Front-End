@@ -11,8 +11,9 @@ import LogoutButton from "./Buttons/logoutButton";
 import UsernameNavBar from "./UsernameNavBar";
 
 function NavBar() {
+  const [isFetchReady, setIsFetchReady] = useState<boolean>(true);
   const [categories, setCategories] = useState<Category[]>([]);
-  const { data, isLoaded, error } = UseFetchGet("all/categories");
+  const { data, isLoaded, error } = UseFetchGet("all/categories", isFetchReady);
 
   let button = <LoginButton />;
   let username;
@@ -48,7 +49,6 @@ function NavBar() {
                     className={styles.dropDownContentLink}
                     key={category.id}
                     to={`/c/${category.name}`}
-                    state={{ category: category.name }}
                   >
                     {category.name}
                   </Link>

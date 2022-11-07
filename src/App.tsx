@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import CategoryContainer from "./pages/ItemsController";
@@ -28,10 +28,11 @@ function App() {
       <Footer />
 
       <Routes>
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<Navigate to="/404" replace />} />
+        <Route path="/404" element={<NotFound />} />
         <Route path="/" element={<HomeContainer />} />
         <Route path="/c/:category" element={<CategoryContainer />} />
-        <Route path="/c/:category/:id" element={<ItemContainer />} />
+        <Route path="/c/:category/:name" element={<ItemContainer />} />
         <Route path="/balance" element={<BalanceContainer />} />
       </Routes>
     </div>

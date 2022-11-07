@@ -7,10 +7,10 @@ function UseFetchAuthGet(apiDestination: string, isFetchReady: boolean) {
   const [error, setError] = useState<Error>();
 
   useEffect(() => {
+    if (!isFetchReady) {
+      return;
+    }
     const fetchData = async () => {
-      if (!isFetchReady) {
-        return;
-      }
       return await fetch(
         process.env.REACT_APP_BASE_URL_DEVELOPMENT + apiDestination,
         {

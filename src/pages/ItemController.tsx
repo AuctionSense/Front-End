@@ -1,18 +1,28 @@
 import Item from "../models/Item";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import UseFetchGet from "../services/UseFetchApi";
 import { useEffect, useState } from "react";
 
 function ItemContainer() {
+  const navigate = useNavigate();
+  const { name } = useParams();
+  const [isFetchReady, setIsFetchReady] = useState<boolean>(true);
   const [item, setItem] = useState<Item>();
-  const { error, isLoaded, data } = UseFetchGet(`all/items/id=${useLocation().state?.id}`);
+  const [isItemSet, setIsItemSet] = useState<boolean>(false);
+  const { error, isLoaded, data } = UseFetchGet(`all/items/name=${name}`, isFetchReady);
 
   useEffect(() => {
+    if (item === undefined && isItemSet)
+    {
+      navigate("/404", {replace: true});
+    }
+
     if (data)
     {
       setItem(data);
+      setIsItemSet(true);
     }  
-  }, [data])
+  }, [data, navigate, isItemSet, item])
   
 
   if (!isLoaded) {
