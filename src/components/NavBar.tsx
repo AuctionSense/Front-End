@@ -47,7 +47,7 @@ function NavBar() {
                   <Link
                     className={styles.dropDownContentLink}
                     key={category.id}
-                    to={`/${category.name}`}
+                    to={`/c/${category.name}`}
                     state={{ category: category.name }}
                   >
                     {category.name}

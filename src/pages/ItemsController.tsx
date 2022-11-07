@@ -6,7 +6,7 @@ import UseFetchGet from "../services/UseFetchApi";
 function CategoryContainer() {
   const location = useLocation();
   const [items, setItems] = useState<Item[]>([]);
-  const { error, isLoaded, data } = UseFetchGet(`all/items/category=${location.pathname.replace("/", "")}`);
+  const { error, isLoaded, data } = UseFetchGet(`all/items/category=${location.state?.category}`);
   const category = useLocation().state?.category;
 
   useEffect(() => {
@@ -34,7 +34,7 @@ function CategoryContainer() {
       <div>
         {items.map((item) => (
           <div key={item.id}>
-            <Link to={`/${category}/${item.name}`} state={{ id: item.id, category: category }}>
+            <Link to={`/c/${category}/${item.name}`} state={{ id: item.id }}>
               Go to item
             </Link>
             <h1>{item.name}</h1>

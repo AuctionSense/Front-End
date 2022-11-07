@@ -7,6 +7,7 @@ import ItemContainer from "./pages/ItemController";
 import { useState } from "react";
 import UseFetchAuthGet from "./services/UseFetchApiAuth";
 import BalanceContainer from "./pages/BalanceController";
+import NotFound from "./pages/NotFound";
 
 function App() {
   const [isFetchReady, setIsFetchReady] = useState<boolean>(false);
@@ -27,9 +28,10 @@ function App() {
       <Footer />
 
       <Routes>
+        <Route path="*" element={<NotFound />} />
         <Route path="/" element={<HomeContainer />} />
-        <Route path="/:category" element={<CategoryContainer />} />
-        <Route path="/:category/:id" element={<ItemContainer />} />
+        <Route path="/c/:category" element={<CategoryContainer />} />
+        <Route path="/c/:category/:id" element={<ItemContainer />} />
         <Route path="/balance" element={<BalanceContainer />} />
       </Routes>
     </div>
