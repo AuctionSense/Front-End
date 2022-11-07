@@ -4,13 +4,14 @@ import HomeContainer from "./HomeController";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import UseFetchAuthGet from "../services/UseFetchApiAuth";
+import UseFetchAuthGet, { UseFetchAuthPost } from "../services/UseFetchApiAuth";
 
 function BalanceContainer() {
   const [amount, setAmount] = useState<string>();
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
-  const [balance, setBalance] = useState<string>("0.00");
-  const { data, error, isLoaded } = UseFetchAuthGet("user/balance", true);
+  const [balance, setBalance] = useState<string>();
+  const { data, error, isLoaded } = UseFetchAuthGet(`user/balance/${KeyCloakService.getUsername()}`, true);
+  const { data: newBalance, error: authError, isLoaded: isLoadedAuth } = UseFetchAuthPost(`user/balance/${KeyCloakService.getUsername()}/${amount}`, isSubmit);
 
   let patternTwoDigisAfterComma = /^\d+(\.\d{0,2})?$/;
 
@@ -47,12 +48,17 @@ function BalanceContainer() {
   useEffect(() => {
 
     if (isLoaded && data) {
-        setBalance(data.balance);
+        setBalance(data);
     }
-    if (isSubmit) {
-      // API ERROR CALL OR SUCCESS
+    else if (error)
+    {
+      setBalance(error.message);
     }
-  }, [isSubmit, isLoaded, data]);
+    else {
+      setBalance("Loading..");
+    }
+
+  }, [isLoaded, data, error]);
 
   if (!KeyCloakService.isLoggedIn()) {
     return <HomeContainer />;
