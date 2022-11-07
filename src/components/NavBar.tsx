@@ -14,8 +14,6 @@ function NavBar() {
   const [categories, setCategories] = useState<Category[]>([]);
   const { data, isLoaded, error } = UseFetchGet("all/categories", isFetchReady);
 
-  console.log(isLoaded, error)
-  setIsFetchReady(true);
 
   let button = <LoginButton />;
   let username;
@@ -24,8 +22,11 @@ function NavBar() {
   useEffect(() => {
     if (data) {
       setCategories(data);
+      setIsFetchReady(false);
+  console.log(isLoaded, error)
+
     }
-  }, [data]);
+  }, [data, error, isLoaded]);
 
   if (KeyCloakService.isLoggedIn()) {
     button = <LogoutButton />;

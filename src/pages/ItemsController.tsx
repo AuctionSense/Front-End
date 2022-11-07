@@ -11,7 +11,6 @@ function CategoryContainer() {
   const [isItemsSet, setIsItemsSet] = useState<boolean>(false);
   const { error, data, isLoaded } = UseFetchGet(`all/items/category=${category}`, isFetchReady);
 
-  setIsFetchReady(true);
   useEffect(() => {
     if (items.length === 0 && isItemsSet)
     {
@@ -21,7 +20,10 @@ function CategoryContainer() {
     if (data)
     {
       setItems(data);
-      setIsItemsSet(true);
+  setIsItemsSet(true);
+  setIsFetchReady(true);
+
+
     }
   }, [data, navigate, items, isLoaded, isItemsSet])
  

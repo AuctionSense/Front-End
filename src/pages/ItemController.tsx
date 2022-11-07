@@ -11,7 +11,6 @@ function ItemContainer() {
   const [isItemSet, setIsItemSet] = useState<boolean>(false);
   const { error, isLoaded, data } = UseFetchGet(`all/items/name=${name}`, isFetchReady);
 
-  setIsFetchReady(true);
   useEffect(() => {
     if (item === undefined && isItemSet)
     {
@@ -22,6 +21,8 @@ function ItemContainer() {
     {
       setItem(data);
       setIsItemSet(true);
+  setIsFetchReady(true);
+
     }  
   }, [data, navigate, isItemSet, item])
   
