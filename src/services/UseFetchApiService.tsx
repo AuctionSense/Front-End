@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
+import HttpConfig from "./HttpConfigService";
 
 /** Fetches data from the given destination.
  *
  * @param apiDestination The destination for fetching the data. Example: items/category=games
  * @returns If the data has loaded, error if there is an error and data if there is data.
  */
-function UseFetchGet(apiDestination: string, isFetchReady: boolean) {
+function UseFetchGet(apiDestination: string, isFetchReady: boolean, headers: any, fetchMethod: string) {
   const [data, setData] = useState<any>(null);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [error, setError] = useState<Error>();
@@ -18,25 +19,26 @@ function UseFetchGet(apiDestination: string, isFetchReady: boolean) {
       return await fetch(
         process.env.REACT_APP_BASE_URL_DEVELOPMENT + apiDestination,
         {
-          method: "GET",
+          method: fetchMethod,
           mode: "cors",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: headers,
         }
       )
         .then((response) => response.json())
         .then((data) => {
           setIsLoaded(true);
           setData(data);
+          HttpConfig.removeAllHeaders();
         })
         .catch((err) => {
           setIsLoaded(true);
           setError(err);
+          HttpConfig.removeAllHeaders();
         });
     };
     fetchData();
-  }, [isFetchReady, apiDestination]);
+
+  }, [isFetchReady, apiDestination, headers, fetchMethod]);
 
   return { isLoaded, error, data };
 }

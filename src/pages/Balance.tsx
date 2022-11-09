@@ -12,7 +12,7 @@ function BalanceContainer() {
   const [balance, setBalance] = useState<string>();
   const { data, error, isLoaded } = UseFetchAuthGet(
     `user/balance/${KeyCloakService.getUsername()}`,
-    true
+    true,
   );
   const {
     data: newB,

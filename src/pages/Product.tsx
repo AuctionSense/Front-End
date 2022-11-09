@@ -2,6 +2,7 @@ import Item from "../models/Product";
 import { useNavigate, useParams } from "react-router-dom";
 import UseFetchGet from "../services/UseFetchApiService";
 import { useEffect, useState } from "react";
+import HttpConfig from "../services/HttpConfigService";
 
 function ItemContainer() {
   const navigate = useNavigate();
@@ -11,7 +12,9 @@ function ItemContainer() {
   const [isItemSet, setIsItemSet] = useState<boolean>(false);
   const { error, isLoaded, data } = UseFetchGet(
     `all/items/name=${name}`,
-    isFetchReady
+    isFetchReady,
+    HttpConfig.getHeaders(),
+    HttpConfig.methods.GET
   );
 
   useEffect(() => {

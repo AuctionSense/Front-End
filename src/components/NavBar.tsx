@@ -7,15 +7,28 @@ import UseFetchGet from "../services/UseFetchApiService";
 import BalanceNavBar from "./NavBar/BalanceNavBar";
 import LoginButton from "./Buttons/LoginButton";
 import LogoutButton from "./Buttons/LogoutButton";
+import HttpConfig from "../services/HttpConfigService";
 
 function NavBar() {
   const [isFetchReady, setIsFetchReady] = useState<boolean>(true);
   const [categories, setCategories] = useState<Category[]>([]);
-  const { data, isLoaded, error } = UseFetchGet("all/categories", isFetchReady);
+  const [headersAdded, setHeadersAdded] = useState<boolean>(false);
+  const { data, isLoaded, error } = UseFetchGet("all/categories", isFetchReady, HttpConfig.getHeaders(), HttpConfig.methods.GET);
 
   let button = <LoginButton />;
   let username;
   let addBalance;
+
+  const setHeaders = () => 
+  {
+    HttpConfig.setHeader("Content-Type", "application/json");
+  }
+
+  if (!headersAdded)
+  {
+    setHeaders();
+    setHeadersAdded(true);
+  }
 
   useEffect(() => {
     if (data) {
