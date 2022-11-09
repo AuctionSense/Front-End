@@ -8,6 +8,7 @@ import { useState } from "react";
 import UseFetchAuthGet from "./services/UseFetchApiAuth";
 import BalanceContainer from "./pages/BalanceController";
 import NotFound from "./pages/NotFound";
+import KeyCloakService from "./services/KeyCloakService";
 
 function App() {
   const [isFetchReady, setIsFetchReady] = useState<boolean>(false);
@@ -22,6 +23,7 @@ function App() {
     <div className="App">
       <NavBar />
 
+      <button onClick={KeyCloakService.updateToken}>Refreshtoken</button>
       <button disabled>test</button>
       <button onClick={() => setFetchReady()}>fetchApiAdmin</button>
 

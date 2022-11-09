@@ -1,66 +1,77 @@
 import Keycloak from "keycloak-js";
-
-const _kc = new Keycloak("/keycloak.json")
+const _kc = new Keycloak("/keycloak.json");
 
 const initKeyCloak = (onAuthenticatedCallback: any) => {
-    _kc.init({
-        onLoad: "check-sso",
-        silentCheckSsoRedirectUri: window.location.origin + "/silent-check-sso.html",
-        pkceMethod: "S256"
+  _kc
+    .init({
+      onLoad: "check-sso",
+      silentCheckSsoRedirectUri:
+        window.location.origin + "/silent-check-sso.html",
+      pkceMethod: "S256",
     })
     .then((authenticated) => {
-        if (!authenticated)
-        {
-            console.log("Not Authenticated!")
-        }
-        onAuthenticatedCallback();
+      if (!authenticated) {
+        console.log("Not Authenticated!");
+      }
+      onAuthenticatedCallback();
     })
     .catch(() => {
-        alert("failed to initialize!");
-        onAuthenticatedCallback();
-    })
+      alert("failed to initialize!");
+      onAuthenticatedCallback();
+    });
 };
 
-const doLogin = () =>
-{
-    if (_kc.authenticated) {
-        console.log("Already logged in.")
-        return;
-    }
-    _kc.login();
-}
+const doLogin = () => {
+  if (_kc.authenticated) {
+    console.log("Already logged in.");
+    return;
+  }
+  _kc.login();
+};
 
-const doLogout = () =>
-{
-    if (!_kc.authenticated) {
-        console.log("Not logged in.")
-        return;
-    }
-    _kc.logout();
-}
+const doLogout = () => {
+  if (!_kc.authenticated) {
+    console.log("Not logged in.");
+    return;
+  }
+  _kc.logout();
+};
 
-const getToken = () =>
-{
-    if (!_kc.authenticated) {
-        console.log("Not logged in yet.")
-        return;
-    }
-    return _kc.token;
-}
+const getToken = () => {
+  if (!_kc.authenticated) {
+    console.log("Not logged in yet.");
+    return;
+  }
+  return _kc.token;
+};
+
+const updateToken = () => 
+  _kc.updateToken(5)
+    .then((refreshed) => {
+        if (refreshed)
+        {
+            console.log("token was refreshed: " + refreshed);
+        }
+        else {
+            console.log("Token is still valid: " + refreshed)
+        }
+    })
+    .catch(doLogin);
 
 const isLoggedIn = () => {
-    return _kc.authenticated
+  return _kc.authenticated;
 };
 
 const getUsername = () => _kc.tokenParsed?.preferred_username;
 
 const KeyCloakService = {
-    initKeyCloak,
-    doLogin,
-    doLogout,
-    getToken,
-    getUsername,
-    isLoggedIn
-}
+  initKeyCloak,
+  doLogin,
+  doLogout,
+  getToken,
+  updateToken,
+  isLoggedIn,
+  getUsername,
+};
 
 export default KeyCloakService;

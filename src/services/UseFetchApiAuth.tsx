@@ -7,6 +7,10 @@ function UseFetchAuthGet(apiDestination: string, isFetchReady: boolean) {
   const [error, setError] = useState<Error>();
 
   useEffect(() => {
+    if (!KeyCloakService.isLoggedIn())
+    {
+      KeyCloakService.updateToken();
+    }
     if (!isFetchReady) {
       return;
     }
