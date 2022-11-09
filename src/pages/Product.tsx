@@ -1,6 +1,6 @@
-import Item from "../models/Item";
+import Item from "../models/Product";
 import { useNavigate, useParams } from "react-router-dom";
-import UseFetchGet from "../services/UseFetchApi";
+import UseFetchGet from "../services/UseFetchApiService";
 import { useEffect, useState } from "react";
 
 function ItemContainer() {

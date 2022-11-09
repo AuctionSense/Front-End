@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import KeyCloakService from "../services/KeyCloakService";
-import HomeContainer from "./HomeController";
+import HomeContainer from "./Home";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import UseFetchAuthGet, { UseFetchAuthPut } from "../services/UseFetchApiAuth";
+import UseFetchAuthGet, { UseFetchAuthPut } from "../services/UseFetchApiAuthService";
 
 function BalanceContainer() {
   const [amount, setAmount] = useState<string>();

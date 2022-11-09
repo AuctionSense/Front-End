@@ -1,12 +1,12 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
-import CategoryContainer from "./pages/ItemsController";
-import HomeContainer from "./pages/HomeController";
-import ItemContainer from "./pages/ItemController";
+import CategoryContainer from "./pages/Products";
+import HomeContainer from "./pages/Home";
+import ItemContainer from "./pages/Product";
 import { useState } from "react";
-import UseFetchAuthGet from "./services/UseFetchApiAuth";
-import BalanceContainer from "./pages/BalanceController";
+import UseFetchAuthGet from "./services/UseFetchApiAuthService";
+import BalanceContainer from "./pages/Balance";
 import NotFound from "./pages/NotFound";
 import KeyCloakService from "./services/KeyCloakService";
 

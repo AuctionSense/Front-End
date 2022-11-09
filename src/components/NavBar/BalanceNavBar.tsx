@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import styles from "../App.module.css";
+import styles from "../css/App.module.css";
 
 function BalanceNavBar() {
   return (

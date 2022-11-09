@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import styles from "../App.module.css";
+import styles from "../css/App.module.css";
 import Category from "../models/Category";
 import KeyCloakService from "../services/KeyCloakService";
-import UseFetchGet from "../services/UseFetchApi";
-import BalanceNavBar from "./BalanceNavBar";
+import UseFetchGet from "../services/UseFetchApiService";
+import BalanceNavBar from "./NavBar/BalanceNavBar";
 import LoginButton from "./Buttons/LoginButton";
-import LogoutButton from "./Buttons/logoutButton";
-import UsernameNavBar from "./UsernameNavBar";
+import LogoutButton from "./Buttons/LogoutButton";
 
 function NavBar() {
   const [isFetchReady, setIsFetchReady] = useState<boolean>(true);
@@ -29,7 +28,7 @@ function NavBar() {
 
   if (KeyCloakService.isLoggedIn()) {
     button = <LogoutButton />;
-    username = <UsernameNavBar />;
+    username = KeyCloakService.getUsername();
     addBalance = <BalanceNavBar />;
   }
 

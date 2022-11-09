@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import Item from "../models/Item";
-import UseFetchGet from "../services/UseFetchApi";
+import Item from "../models/Product";
+import UseFetchGet from "../services/UseFetchApiService";
 
 function CategoryContainer() {
   const navigate = useNavigate();
