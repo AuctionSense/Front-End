@@ -1,10 +1,9 @@
-function Footer()
-{
-    return (
-        <div>
-        <footer>@JarnoBV</footer>
-      </div>
-    );
+function Footer() {
+  return (
+    <div>
+      <footer>@JarnoBV</footer>
+    </div>
+  );
 }
 
 export default Footer;

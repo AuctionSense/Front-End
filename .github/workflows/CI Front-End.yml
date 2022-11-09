@@ -2,7 +2,7 @@ name: CI Front-End
 
 on:
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build:
@@ -17,13 +17,10 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}  
+          node-version: ${{ matrix.node-version }}
       - name: Install dependencies
         run: yarn --frozen-lockfile
       - name: yarn run tests
         run: yarn test
-      - name: run yarn build  
+      - name: run yarn build
         run: yarn build
-
-
-

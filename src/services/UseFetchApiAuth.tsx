@@ -10,8 +10,7 @@ function UseFetchAuthGet(apiDestination: string, isFetchReady: boolean) {
     if (!isFetchReady) {
       return;
     }
-    if (!KeyCloakService.isLoggedIn())
-    {
+    if (!KeyCloakService.isLoggedIn()) {
       KeyCloakService.updateToken();
     }
     const fetchData = async () => {
@@ -22,7 +21,7 @@ function UseFetchAuthGet(apiDestination: string, isFetchReady: boolean) {
           mode: "cors",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": "Bearer " + KeyCloakService.getToken(),
+            Authorization: "Bearer " + KeyCloakService.getToken(),
           },
         }
       )
@@ -42,8 +41,7 @@ function UseFetchAuthGet(apiDestination: string, isFetchReady: boolean) {
   return { isLoaded, error, data };
 }
 
-function UseFetchAuthPut(apiDestination: string, object: any)
-{
+function UseFetchAuthPut(apiDestination: string, object: any) {
   const [data, setData] = useState<any>(null);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [error, setError] = useState<Error>();
@@ -51,34 +49,36 @@ function UseFetchAuthPut(apiDestination: string, object: any)
   useEffect(() => {
     const postData = async () => {
       // This check is for hooks at top of a file so it doesn't send an unnecessary request.
-      if (!object)
-      {
+      if (!object) {
         return;
       }
-      return await fetch(process.env.REACT_APP_BASE_URL_DEVELOPMENT + apiDestination, {
-        method: "PUT",
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + KeyCloakService.getToken(),
-        },
-        body: JSON.stringify(object)
-      })
-      .then((response) => response.json())
-      .then((data) => {
-        setIsLoaded(true);
-        setData(data);
-      })
-      .catch((err) => {
-        setIsLoaded(true);
-        setError(err);
-      })
-    }
+      return await fetch(
+        process.env.REACT_APP_BASE_URL_DEVELOPMENT + apiDestination,
+        {
+          method: "PUT",
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + KeyCloakService.getToken(),
+          },
+          body: JSON.stringify(object),
+        }
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          setIsLoaded(true);
+          setData(data);
+        })
+        .catch((err) => {
+          setIsLoaded(true);
+          setError(err);
+        });
+    };
 
     postData();
-  }, [apiDestination, object])
+  }, [apiDestination, object]);
 
-  return { isLoaded, error, data }
+  return { isLoaded, error, data };
 }
 
 export default UseFetchAuthGet;

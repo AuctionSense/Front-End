@@ -45,21 +45,18 @@ const getToken = () => {
   return _kc.token;
 };
 
-const updateToken = () => 
-{
-  _kc.updateToken(5)
-  .then((refreshed) => {
-      if (refreshed)
-      {
-          console.log("token was refreshed: " + refreshed);
+const updateToken = () => {
+  _kc
+    .updateToken(5)
+    .then((refreshed) => {
+      if (refreshed) {
+        console.log("token was refreshed: " + refreshed);
+      } else {
+        console.log("Token is still valid: " + refreshed);
       }
-      else {
-          console.log("Token is still valid: " + refreshed)
-      }
-  })
-  .catch(doLogin);
-}
-
+    })
+    .catch(doLogin);
+};
 
 const isLoggedIn = () => {
   return _kc.authenticated;

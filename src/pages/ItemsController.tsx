@@ -9,24 +9,23 @@ function CategoryContainer() {
   const [isFetchReady, setIsFetchReady] = useState<boolean>(true);
   const [items, setItems] = useState<Item[]>([]);
   const [isItemsSet, setIsItemsSet] = useState<boolean>(false);
-  const { error, data, isLoaded } = UseFetchGet(`all/items/category=${category}`, isFetchReady);
+  const { error, data, isLoaded } = UseFetchGet(
+    `all/items/category=${category}`,
+    isFetchReady
+  );
 
   useEffect(() => {
-    if (items.length === 0 && isItemsSet)
-    {
-      navigate("/404", {replace: true});
+    if (items.length === 0 && isItemsSet) {
+      navigate("/404", { replace: true });
     }
 
-    if (data)
-    {
+    if (data) {
       setItems(data);
-  setIsItemsSet(true);
-  setIsFetchReady(true);
-
-
+      setIsItemsSet(true);
+      setIsFetchReady(true);
     }
-  }, [data, navigate, items, isLoaded, isItemsSet])
- 
+  }, [data, navigate, items, isLoaded, isItemsSet]);
+
   if (!isLoaded) {
     return (
       <div>
@@ -39,28 +38,22 @@ function CategoryContainer() {
         <h1>{error.message}</h1>
       </div>
     );
-  } else if (items)
-  {
+  } else if (items) {
     return (
       <div>
         {items.map((item) => (
           <div key={item.id}>
-            <Link to={`/c/${category}/${item.name}`}>
-              Go to item
-            </Link>
+            <Link to={`/c/${category}/${item.name}`}>Go to item</Link>
             <h1>{item.name}</h1>
             <p>{item.description}</p>
           </div>
         ))}
       </div>
     );
-  }
-  else {
+  } else {
     return (
       <div>
-        <h1>
-          Something unexpected happened!
-        </h1>
+        <h1>Something unexpected happened!</h1>
       </div>
     );
   }

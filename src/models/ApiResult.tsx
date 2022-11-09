@@ -1,6 +1,6 @@
 interface ApiResult {
-    message: string,
-    success: boolean
+  message: string;
+  success: boolean;
 }
 
 export default ApiResult;
