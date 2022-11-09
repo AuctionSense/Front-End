@@ -1,6 +1,6 @@
 interface Category {
-    id: string,
-    name: string
+  id: string;
+  name: string;
 }
 
-export default Category
+export default Category;

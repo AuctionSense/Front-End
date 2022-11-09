@@ -9,23 +9,22 @@ function ItemContainer() {
   const [isFetchReady, setIsFetchReady] = useState<boolean>(true);
   const [item, setItem] = useState<Item>();
   const [isItemSet, setIsItemSet] = useState<boolean>(false);
-  const { error, isLoaded, data } = UseFetchGet(`all/items/name=${name}`, isFetchReady);
+  const { error, isLoaded, data } = UseFetchGet(
+    `all/items/name=${name}`,
+    isFetchReady
+  );
 
   useEffect(() => {
-    if (item === undefined && isItemSet)
-    {
-      navigate("/404", {replace: true});
+    if (item === undefined && isItemSet) {
+      navigate("/404", { replace: true });
     }
 
-    if (data)
-    {
+    if (data) {
       setItem(data);
       setIsItemSet(true);
-  setIsFetchReady(true);
-
-    }  
-  }, [data, navigate, isItemSet, item])
-  
+      setIsFetchReady(true);
+    }
+  }, [data, navigate, isItemSet, item]);
 
   if (!isLoaded) {
     return (
@@ -36,7 +35,10 @@ function ItemContainer() {
   } else if (error) {
     return (
       <div>
-        <h1>Couldn't load data, try reloading the page or going back to the home page.</h1>
+        <h1>
+          Couldn't load data, try reloading the page or going back to the home
+          page.
+        </h1>
       </div>
     );
   } else if (item) {

@@ -10,8 +10,18 @@ function BalanceContainer() {
   const [amount, setAmount] = useState<string>();
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
   const [balance, setBalance] = useState<string>();
-  const { data, error, isLoaded } = UseFetchAuthGet(`user/balance/${KeyCloakService.getUsername()}`, true);
-  const { data: newB, error: authError, isLoaded: isLoadedAuth } = UseFetchAuthPut(`user/balance/${KeyCloakService.getUsername()}/${amount}`, isSubmit);
+  const { data, error, isLoaded } = UseFetchAuthGet(
+    `user/balance/${KeyCloakService.getUsername()}`,
+    true
+  );
+  const {
+    data: newB,
+    error: authError,
+    isLoaded: isLoadedAuth,
+  } = UseFetchAuthPut(
+    `user/balance/${KeyCloakService.getUsername()}/${amount}`,
+    isSubmit
+  );
 
   console.log(authError, isLoadedAuth);
 
@@ -48,23 +58,17 @@ function BalanceContainer() {
   };
 
   useEffect(() => {
-
     if (isLoaded && data) {
-        setBalance(data);
-    }
-    else if (error)
-    {
+      setBalance(data);
+    } else if (error) {
       setBalance(error.message);
-    }
-    else {
+    } else {
       setBalance("Loading..");
     }
-    if (newB)
-    {
+    if (newB) {
       setBalance(newB.newBalance);
       setIsSubmit(false);
     }
-
   }, [newB, isLoaded, data, error]);
 
   if (!KeyCloakService.isLoggedIn()) {

@@ -14,7 +14,6 @@ function NavBar() {
   const [categories, setCategories] = useState<Category[]>([]);
   const { data, isLoaded, error } = UseFetchGet("all/categories", isFetchReady);
 
-
   let button = <LoginButton />;
   let username;
   let addBalance;
@@ -23,8 +22,8 @@ function NavBar() {
     if (data) {
       setCategories(data);
       setIsFetchReady(false);
-  console.log(isLoaded, error)
-
+      console.log(isLoaded, error);
+      console.log(data);
     }
   }, [data, error, isLoaded]);
 
