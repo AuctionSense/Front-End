@@ -7,12 +7,12 @@ function UseFetchAuthGet(apiDestination: string, isFetchReady: boolean) {
   const [error, setError] = useState<Error>();
 
   useEffect(() => {
+    if (!isFetchReady) {
+      return;
+    }
     if (!KeyCloakService.isLoggedIn())
     {
       KeyCloakService.updateToken();
-    }
-    if (!isFetchReady) {
-      return;
     }
     const fetchData = async () => {
       return await fetch(
