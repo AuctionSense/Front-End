@@ -17,6 +17,7 @@ const initKeyCloak = (onAuthenticatedCallback: any) => {
     })
     .catch(() => {
         alert("failed to initialize!");
+        onAuthenticatedCallback();
     })
 };
 

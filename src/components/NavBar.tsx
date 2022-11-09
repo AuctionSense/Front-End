@@ -24,6 +24,7 @@ function NavBar() {
       setCategories(data);
       setIsFetchReady(false);
   console.log(isLoaded, error)
+  console.log(data);
 
     }
   }, [data, error, isLoaded]);
