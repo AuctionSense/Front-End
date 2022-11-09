@@ -25,7 +25,7 @@ function App() {
 
       <button onClick={KeyCloakService.updateToken}>Refreshtoken</button>
       <button disabled>test</button>
-      <button onClick={() => setFetchReady()}>fetchApiAdmin</button>
+      <button onClick={setFetchReady}>fetchApiAdmin</button>
 
       <Footer />
 
