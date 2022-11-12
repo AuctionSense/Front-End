@@ -1,4 +1,5 @@
 import Keycloak from "keycloak-js";
+
 const _kc = new Keycloak("/keycloak.json");
 
 const initKeyCloak = (onAuthenticatedCallback: any) => {
@@ -9,21 +10,15 @@ const initKeyCloak = (onAuthenticatedCallback: any) => {
         window.location.origin + "/silent-check-sso.html",
       pkceMethod: "S256",
     })
-    .then((authenticated) => {
-      if (!authenticated) {
-        console.log("Not Authenticated!");
-      }
-      onAuthenticatedCallback();
-    })
+    .then(() => onAuthenticatedCallback())
     .catch(() => {
-      alert("failed to initialize!");
+      alert("Crucial services are down, please come back later.");
       onAuthenticatedCallback();
     });
 };
 
 const doLogin = () => {
   if (_kc.authenticated) {
-    console.log("Already logged in.");
     return;
   }
   _kc.login();
@@ -31,7 +26,6 @@ const doLogin = () => {
 
 const doLogout = () => {
   if (!_kc.authenticated) {
-    console.log("Not logged in.");
     return;
   }
   _kc.logout();
@@ -39,27 +33,17 @@ const doLogout = () => {
 
 const getToken = () => {
   if (!_kc.authenticated) {
-    console.log("Not logged in yet.");
     return;
   }
   return _kc.token;
 };
 
-const updateToken = () => {
-  _kc
-    .updateToken(5)
-    .then((refreshed) => {
-      if (refreshed) {
-        console.log("token was refreshed: " + refreshed);
-      } else {
-        console.log("Token is still valid: " + refreshed);
-      }
-    })
-    .catch(doLogin);
+const isLoggedIn = () => {
+  return !!_kc.token;
 };
 
-const isLoggedIn = () => {
-  return _kc.authenticated;
+const updateToken = () => {
+  _kc.updateToken(5).catch(doLogin);
 };
 
 const getUsername = () => _kc.tokenParsed?.preferred_username;
