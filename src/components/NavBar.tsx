@@ -10,7 +10,7 @@ import LogoutButton from "./Buttons/LogoutButton";
 import HttpConfig from "../services/HttpConfigService";
 
 function NavBar() {
-  const [isFetchReady, setIsFetchReady] = useState<boolean>(false);
+  const [isFetchReady, setIsFetchReady] = useState<boolean>(true);
   const [categories, setCategories] = useState<Category[]>([]);
   const [headersAdded, setHeadersAdded] = useState<boolean>(false);
   const { data, isLoaded, error } = UseFetch("all/categories", isFetchReady, HttpConfig.getHeaders(), HttpConfig.methods.GET);
