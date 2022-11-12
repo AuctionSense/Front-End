@@ -24,7 +24,7 @@ function App() {
         <Route path="/404" element={<NotFound />} />
         <Route path="/" element={<HomeContainer />} />
         <Route path="/c/:category" element={<CategoryContainer />} />
-        <Route path="/c/:category/:name" element={<ItemContainer />} />
+        <Route path="/c/:category/:product" element={<ItemContainer />} />
         <Route path="/balance" element={<BalanceContainer />} />
       </Routes>
     </div>

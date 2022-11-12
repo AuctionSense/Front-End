@@ -6,18 +6,27 @@ import HttpConfig from "../services/HttpConfigService";
 
 function ItemContainer() {
   const navigate = useNavigate();
-  const { name } = useParams();
+  const { product } = useParams();
   const [isFetchReady, setIsFetchReady] = useState<boolean>(true);
   const [item, setItem] = useState<Item>();
   const [isItemSet, setIsItemSet] = useState<boolean>(false);
+  const [currentProduct, setCurrentProduct] = useState<string>(product || "");
   const { error, isLoaded, data } = UseFetch(
-    `all/items/name=${name}`,
+    `all/items/name=${product}`,
     isFetchReady,
     HttpConfig.getHeaders(),
     HttpConfig.methods.GET
   );
 
   useEffect(() => {
+    if (isFetchReady === true) {
+      setIsFetchReady(false);
+    } 
+    if (currentProduct !== product)
+    {
+      setIsFetchReady(true);
+      setCurrentProduct(product || "");
+    }
     if (item === undefined && isItemSet) {
       navigate("/404", { replace: true });
     }
@@ -25,9 +34,8 @@ function ItemContainer() {
     if (data) {
       setItem(data);
       setIsItemSet(true);
-      setIsFetchReady(true);
     }
-  }, [data, navigate, isItemSet, item]);
+  }, [data, navigate, isItemSet, item, currentProduct, isFetchReady, product]);
 
   if (!isLoaded) {
     return (

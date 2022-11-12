@@ -6,10 +6,12 @@ import UseFetch from "../services/UseFetchApiService";
 
 function CategoryContainer() {
   const navigate = useNavigate();
-  const { category } = useParams();
+  const { category } = useParams<string>();
   const [isFetchReady, setIsFetchReady] = useState<boolean>(true);
   const [items, setItems] = useState<Item[]>([]);
   const [isItemsSet, setIsItemsSet] = useState<boolean>(false);
+  const [currentCategory, setCurrentCategory] = useState<string>(category || "");
+
   const { error, data, isLoaded } = UseFetch(
     `all/items/category=${category}`,
     isFetchReady,
@@ -18,6 +20,15 @@ function CategoryContainer() {
   );
 
   useEffect(() => {
+    if (isFetchReady === true) {
+      setIsFetchReady(false);
+    } 
+    if (currentCategory !== category)
+    {
+      setIsFetchReady(true);
+      setCurrentCategory(category || "");
+    }
+ 
     if (items.length === 0 && isItemsSet) {
       navigate("/404", { replace: true });
     }
@@ -25,9 +36,8 @@ function CategoryContainer() {
     if (data) {
       setItems(data);
       setIsItemsSet(true);
-      setIsFetchReady(true);
     }
-  }, [data, navigate, items, isLoaded, isItemsSet]);
+  }, [data, navigate, items, isLoaded, isItemsSet, isFetchReady, category, currentCategory]);
 
   if (!isLoaded) {
     return (

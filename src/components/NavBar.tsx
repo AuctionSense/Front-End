@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "../css/App.module.css";
 import KeyCloakService from "../services/KeyCloakService";
-import BalanceNavbar from "./Navbar/BalanceNavbar";
-import LoginButton from "./Buttons/LoginButton";
-import LogoutButton from "./Buttons/LogoutButton";
+import BalanceNavbar from "./navbar/BalanceNavbar";
+import LoginButton from "./buttons/LoginButton";
+import LogoutButton from "./buttons/LogoutButton";
 import HttpConfig from "../services/HttpConfigService";
-import CategoryNavbar from "./Navbar/CategoryNavbar";
+import CategoryNavbar from "./navbar/CategoryNavbar";
 
 function Navbar() {
   const [headersAdded, setHeadersAdded] = useState<boolean>(false);
