@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import NavBar from "./components/NavBar";
+import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import CategoryContainer from "./pages/Products";
 import HomeContainer from "./pages/Home";
@@ -12,7 +12,7 @@ function App() {
 
   return (
     <div className="App">
-      <NavBar />
+      <Navbar />
 
       <button onClick={KeyCloakService.updateToken}>Refreshtoken</button>
       <button disabled>test</button>

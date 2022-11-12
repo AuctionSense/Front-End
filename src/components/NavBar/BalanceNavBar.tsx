@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import styles from "../../css/App.module.css";
 
-function BalanceNavBar() {
+function BalanceNavbar() {
   return (
     <li className={styles.navBarTopEnd}>
       <Link className={styles.navBarTopLink} to={"/balance"}>
@@ -11,4 +11,4 @@ function BalanceNavBar() {
   );
 }
 
-export default BalanceNavBar;
+export default BalanceNavbar;

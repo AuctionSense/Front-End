@@ -1,103 +1,54 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "../css/App.module.css";
-import Category from "../models/Category";
 import KeyCloakService from "../services/KeyCloakService";
-import UseFetch from "../services/UseFetchApiService";
-import BalanceNavBar from "./NavBar/BalanceNavBar";
+import BalanceNavbar from "./Navbar/BalanceNavbar";
 import LoginButton from "./Buttons/LoginButton";
 import LogoutButton from "./Buttons/LogoutButton";
 import HttpConfig from "../services/HttpConfigService";
+import CategoryNavbar from "./Navbar/CategoryNavbar";
 
-function NavBar() {
-  const [isFetchReady, setIsFetchReady] = useState<boolean>(true);
-  const [categories, setCategories] = useState<Category[]>([]);
+function Navbar() {
   const [headersAdded, setHeadersAdded] = useState<boolean>(false);
-  const { data, isLoaded, error } = UseFetch("all/categories", isFetchReady, HttpConfig.getHeaders(), HttpConfig.methods.GET);
-
-  let button = <LoginButton />;
-  let username;
-  let addBalance;
-
-  const setHeaders = () => 
-  {
-    HttpConfig.setHeader("Content-Type", "application/json");
-  }
-
-  if (!headersAdded)
-  {
-    setHeaders();
-    setHeadersAdded(true);
-  }
+  const [username, setUsername] = useState<string | null>(null);
+  const [sessionButton, setSessionButton] = useState<JSX.Element>(
+    <LoginButton />
+  );
+  const [balanceButton, setBalanceButton] = useState<JSX.Element | null>(null);
 
   useEffect(() => {
-    setIsFetchReady(false);
-    if (data) {
-      setCategories(data);
-      console.log(isLoaded, error);
-      console.log(data);
+    if (!headersAdded) {
+      HttpConfig.setHeader("Content-Type", "application/json");
+      setHeadersAdded(true);
     }
-  }, [data, error, isLoaded]);
 
-  if (KeyCloakService.isLoggedIn()) {
-    button = <LogoutButton />;
-    username = KeyCloakService.getUsername();
-    addBalance = <BalanceNavBar />;
-  }
+    if (KeyCloakService.isLoggedIn()) {
+      setSessionButton(<LogoutButton />);
+      setBalanceButton(<BalanceNavbar />);
+      setUsername(KeyCloakService.getUsername());
+    }
+  }, [headersAdded]);
 
-  if (categories) {
-    return (
-      <nav className={styles.navBarTop}>
-        <div>
-          <ul>
-            <li className={styles.navBarTopFront}>
-              <Link className={styles.navBarTopLink} to="/">
-                Image placeholder
-              </Link>
-            </li>
-            <li className={`${styles.dropDown} ${styles.navBarTopFront}`}>
-              <p>Category</p>
-              <div className={styles.dropDownContent}>
-                {categories.map((category) => (
-                  <Link
-                    className={styles.dropDownContentLink}
-                    key={category.id}
-                    to={`/c/${category.name}`}
-                  >
-                    {category.name}
-                  </Link>
-                ))}
-              </div>
-            </li>
-            <li className={styles.navBarTopEnd}>{button}</li>
-            {username}
-            {addBalance}
-          </ul>
-        </div>
-      </nav>
-    );
-  } else {
-    return (
-      <nav className={styles.navBarTop}>
-        <div>
-          <ul>
-            <li className={styles.navBarTopFront}>
-              <Link className={styles.navBarTopLink} to="/">
-                Image placeholder
-              </Link>
-            </li>
-            <li className={`${styles.dropDown} ${styles.navBarTopFront}`}>
-              <p>Category</p>
-              <div className={styles.dropDownContent}></div>
-            </li>
-            <li className={styles.navBarTopEnd}>{button}</li>
-            {username}
-            {addBalance}
-          </ul>
-        </div>
-      </nav>
-    );
-  }
+  return (
+    <nav className={styles.navBarTop}>
+      <div>
+        <ul>
+          <li className={styles.navBarTopFront}>
+            <Link className={styles.navBarTopLink} to="/">
+              Image placeholder
+            </Link>
+          </li>
+          <li className={`${styles.dropDown} ${styles.navBarTopFront}`}>
+            <p>Category</p>
+            {<CategoryNavbar />}
+          </li>
+          <li className={styles.navBarTopEnd}>{sessionButton}</li>
+          <li className={styles.navBarTopEnd}>{username}</li>
+          {balanceButton}
+        </ul>
+      </div>
+    </nav>
+  );
 }
 
-export default NavBar;
+export default Navbar;
