@@ -1,6 +1,6 @@
 import Item from "../models/Product";
 import { useNavigate, useParams } from "react-router-dom";
-import UseFetchGet from "../services/UseFetchApiService";
+import UseFetch from "../services/UseFetchApiService";
 import { useEffect, useState } from "react";
 import HttpConfig from "../services/HttpConfigService";
 
@@ -10,7 +10,7 @@ function ItemContainer() {
   const [isFetchReady, setIsFetchReady] = useState<boolean>(true);
   const [item, setItem] = useState<Item>();
   const [isItemSet, setIsItemSet] = useState<boolean>(false);
-  const { error, isLoaded, data } = UseFetchGet(
+  const { error, isLoaded, data } = UseFetch(
     `all/items/name=${name}`,
     isFetchReady,
     HttpConfig.getHeaders(),

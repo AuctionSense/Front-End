@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Item from "../models/Product";
 import HttpConfig from "../services/HttpConfigService";
-import UseFetchGet from "../services/UseFetchApiService";
+import UseFetch from "../services/UseFetchApiService";
 
 function CategoryContainer() {
   const navigate = useNavigate();
@@ -10,7 +10,7 @@ function CategoryContainer() {
   const [isFetchReady, setIsFetchReady] = useState<boolean>(true);
   const [items, setItems] = useState<Item[]>([]);
   const [isItemsSet, setIsItemsSet] = useState<boolean>(false);
-  const { error, data, isLoaded } = UseFetchGet(
+  const { error, data, isLoaded } = UseFetch(
     `all/items/category=${category}`,
     isFetchReady,
     HttpConfig.getHeaders(),

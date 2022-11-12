@@ -4,24 +4,31 @@ import HomeContainer from "./Home";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import UseFetchAuthGet, { UseFetchAuthPut } from "../services/UseFetchApiAuthService";
+import useFetch from "../services/UseFetchApiService";
+import HttpConfig from "../services/HttpConfigService";
 
 function BalanceContainer() {
+  const [fetchBalance, setFetchBalance] = useState<boolean>(true);
   const [amount, setAmount] = useState<string>();
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
   const [balance, setBalance] = useState<string>();
-  const { data, error, isLoaded } = UseFetchAuthGet(
+  const { data, error, isLoaded } = useFetch(
     `user/balance/${KeyCloakService.getUsername()}`,
-    true,
+    fetchBalance,
+    HttpConfig.getHeaders(),
+    HttpConfig.methods.GET,
   );
   const {
     data: newB,
     error: authError,
     isLoaded: isLoadedAuth,
-  } = UseFetchAuthPut(
+  } = useFetch(
     `user/balance/${KeyCloakService.getUsername()}/${amount}`,
-    isSubmit
+    isSubmit,
+    HttpConfig.getHeaders(),
+    HttpConfig.methods.GET,
   );
+  
 
   console.log(authError, isLoadedAuth);
 
@@ -58,6 +65,7 @@ function BalanceContainer() {
   };
 
   useEffect(() => {
+setFetchBalance(false);
     if (isLoaded && data) {
       setBalance(data);
     } else if (error) {
@@ -69,7 +77,7 @@ function BalanceContainer() {
       setBalance(newB.newBalance);
       setIsSubmit(false);
     }
-  }, [newB, isLoaded, data, error]);
+  }, [newB, isLoaded, data, error, ]);
 
   if (!KeyCloakService.isLoggedIn()) {
     return <HomeContainer />;
