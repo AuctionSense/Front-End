@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-function HomeContainer(props: {setError: any}) {
+function HomePage(props: {setError: any}) {
   const error = null;
 
   useEffect(() => {
@@ -17,4 +17,4 @@ function HomeContainer(props: {setError: any}) {
   );
 }
 
-export default HomeContainer;
+export default HomePage;

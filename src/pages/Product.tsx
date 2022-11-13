@@ -1,14 +1,14 @@
-import Item from "../models/Product";
+import Product from "../models/Product";
 import { useNavigate, useParams } from "react-router-dom";
 import UseFetch from "../services/UseFetchApiService";
 import { useEffect, useState } from "react";
 import HttpConfig from "../services/HttpConfigService";
 
-function ItemContainer(props: {setError: any}) {
+function ProductPage(props: {setError: any}) {
   const navigate = useNavigate();
   const { product } = useParams();
   const [isFetchReady, setIsFetchReady] = useState<boolean>(true);
-  const [item, setItem] = useState<Item>();
+  const [item, setItem] = useState<Product>();
   const [isItemSet, setIsItemSet] = useState<boolean>(false);
   const [currentProduct, setCurrentProduct] = useState<string>(product || "");
   const { error, isLoaded, data } = UseFetch(
@@ -59,4 +59,4 @@ function ItemContainer(props: {setError: any}) {
   } 
 }
 
-export default ItemContainer;
+export default ProductPage;

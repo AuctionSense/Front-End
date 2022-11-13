@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import Item from "../models/Product";
+import Product from "../models/Product";
 import HttpConfig from "../services/HttpConfigService";
 import UseFetch from "../services/UseFetchApiService";
 import Loading from "../components/Loading";
 
-function CategoryContainer(props: {setError: any}) {
+function ProductsPage(props: {setError: any}) {
   const navigate = useNavigate();
   const { category } = useParams<string>();
   const [isFetchReady, setIsFetchReady] = useState<boolean>(true);
-  const [items, setItems] = useState<Item[]>([]);
-  const [isItemsSet, setIsItemsSet] = useState<boolean>(false);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [isProductsSet, setIsProductsSet] = useState<boolean>(false);
   const [currentCategory, setCurrentCategory] = useState<string>(
     category || ""
   );
@@ -23,37 +23,39 @@ function CategoryContainer(props: {setError: any}) {
   );
 
   useEffect(() => {
+    if (isFetchReady === true) {
+      setIsFetchReady(false);
+    }
+
     if (error)
     {
       props.setError(error);
     }
-    if (isFetchReady === true) {
-      setIsFetchReady(false);
-    }
+
     if (currentCategory !== category) {
       setIsFetchReady(true);
       setCurrentCategory(category || "");
     }
 
-    if (items.length === 0 && isItemsSet) {
-      navigate("/404", { replace: true });
+    if (data) {
+      setProducts(data);
+      setIsProductsSet(true);
     }
 
-    if (data) {
-      setItems(data);
-      setIsItemsSet(true);
+    if (products.length === 0 && isProductsSet) {
+      navigate("/404", { replace: true });
     }
   }, [
     data,
     navigate,
-    items,
-    isLoaded,
-    isItemsSet,
-    isFetchReady,
+    products,
     category,
     currentCategory,
     error,
-    props
+    props,
+    isLoaded,
+    isProductsSet,
+    isFetchReady,
   ]);
 
   if (!isLoaded) {
@@ -61,7 +63,7 @@ function CategoryContainer(props: {setError: any}) {
   } else {
     return (
       <div>
-        {items.map((item) => (
+        {products.map((item) => (
           <div key={item.id}>
             <Link to={`/c/${category}/${item.name}`}>Go to item</Link>
             <h1>{item.name}</h1>
@@ -73,4 +75,4 @@ function CategoryContainer(props: {setError: any}) {
   }
 }
 
-export default CategoryContainer;
+export default ProductsPage;

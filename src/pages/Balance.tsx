@@ -7,7 +7,7 @@ import useFetch from "../services/UseFetchApiService";
 import HttpConfig from "../services/HttpConfigService";
 import { useNavigate } from "react-router-dom";
 
-function BalanceContainer(props: {setError: any}) {
+function BalancePage(props: {setError: any}) {
   const [fetchBalance, setFetchBalance] = useState<boolean>(true);
   const [amount, setAmount] = useState<string>();
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
@@ -110,4 +110,4 @@ function BalanceContainer(props: {setError: any}) {
   );
 }
 
-export default BalanceContainer;
+export default BalancePage;

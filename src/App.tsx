@@ -1,11 +1,11 @@
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import CategoryContainer from "./pages/Products";
-import HomeContainer from "./pages/Home";
-import ItemContainer from "./pages/Product";
-import BalanceContainer from "./pages/Balance";
-import NotFound from "./pages/NotFound";
+import ProductsPage from "./pages/Products";
+import HomePage from "./pages/Home";
+import ProductPage from "./pages/Product";
+import BalancePage from "./pages/Balance";
+import NotFoundPage from "./pages/NotFound";
 import KeyCloakService from "./services/KeyCloakService";
 import { useEffect, useState } from "react";
 import ErrorMessage from "./components/ErrorMessage";
@@ -46,19 +46,19 @@ function App() {
 
       <Routes>
         <Route path="*" element={<Navigate to="/404" replace />} />
-        <Route path="/404" element={<NotFound />} />
-        <Route path="/" element={<HomeContainer setError={pull_error} />} />
+        <Route path="/404" element={<NotFoundPage />} />
+        <Route path="/" element={<HomePage setError={pull_error} />} />
         <Route
           path="/c/:category"
-          element={<CategoryContainer setError={pull_error} />}
+          element={<ProductsPage setError={pull_error} />}
         />
         <Route
           path="/c/:category/:product"
-          element={<ItemContainer setError={pull_error} />}
+          element={<ProductPage setError={pull_error} />}
         />
         <Route
           path="/balance"
-          element={<BalanceContainer setError={pull_error} />}
+          element={<BalancePage setError={pull_error} />}
         />
       </Routes>
     </div>
