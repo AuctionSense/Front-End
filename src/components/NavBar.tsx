@@ -8,15 +8,29 @@ import LogoutButton from "./buttons/LogoutButton";
 import HttpConfig from "../services/HttpConfigService";
 import CategoryNavbar from "./navbar/CategoryNavbar";
 
-function Navbar() {
+function Navbar(props: {setError: any}) {
   const [headersAdded, setHeadersAdded] = useState<boolean>(false);
   const [username, setUsername] = useState<string | null>(null);
   const [sessionButton, setSessionButton] = useState<JSX.Element>(
     <LoginButton />
   );
   const [balanceButton, setBalanceButton] = useState<JSX.Element | null>(null);
+  const [error, setError] = useState<Error | null>(null);
+
+  const pull_error = (error: Error) => {
+    if (error)
+    {
+      setError(error);
+    }
+  }
 
   useEffect(() => {
+    if (error)
+    {
+      props.setError(error);
+      setError(error);
+    }
+
     if (!headersAdded) {
       HttpConfig.setHeader("Content-Type", "application/json");
       setHeadersAdded(true);
@@ -27,7 +41,7 @@ function Navbar() {
       setBalanceButton(<BalanceNavbar />);
       setUsername(KeyCloakService.getUsername());
     }
-  }, [headersAdded]);
+  }, [headersAdded, error, props]);
 
   return (
     <nav className={styles.navBarTop}>
@@ -40,7 +54,7 @@ function Navbar() {
           </li>
           <li className={`${styles.dropDown} ${styles.navBarTopFront}`}>
             <p>Category</p>
-            {<CategoryNavbar />}
+            {<CategoryNavbar setError={pull_error}/>}
           </li>
           <li className={styles.navBarTopEnd}>{sessionButton}</li>
           <li className={styles.navBarTopEnd}>{username}</li>

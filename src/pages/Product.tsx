@@ -3,9 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import UseFetch from "../services/UseFetchApiService";
 import { useEffect, useState } from "react";
 import HttpConfig from "../services/HttpConfigService";
-import ErrorMessage from "../components/ErrorMessage";
 
-function ItemContainer() {
+function ItemContainer(props: {setError: any}) {
   const navigate = useNavigate();
   const { product } = useParams();
   const [isFetchReady, setIsFetchReady] = useState<boolean>(true);
@@ -23,6 +22,10 @@ function ItemContainer() {
     if (isFetchReady === true) {
       setIsFetchReady(false);
     } 
+    if (error)
+    {
+      props.setError(error);
+    }
     if (currentProduct !== product)
     {
       setIsFetchReady(true);
@@ -36,7 +39,7 @@ function ItemContainer() {
       setItem(data);
       setIsItemSet(true);
     }
-  }, [data, navigate, isItemSet, item, currentProduct, isFetchReady, product]);
+  }, [data, navigate, isItemSet, item, currentProduct, isFetchReady, product, error, props]);
 
   if (!isLoaded) {
     return (
@@ -47,7 +50,6 @@ function ItemContainer() {
   } else {
     return (
       <div>
-        {error ? <ErrorMessage error = { error }/> : null}
         <div key={item?.id}>
           <h1>{item?.name}</h1>
           <p>{item?.description}</p>

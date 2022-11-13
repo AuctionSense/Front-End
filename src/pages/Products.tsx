@@ -4,9 +4,8 @@ import Item from "../models/Product";
 import HttpConfig from "../services/HttpConfigService";
 import UseFetch from "../services/UseFetchApiService";
 import Loading from "../components/Loading";
-import ErrorMessage from "../components/ErrorMessage";
 
-function CategoryContainer() {
+function CategoryContainer(props: {setError: any}) {
   const navigate = useNavigate();
   const { category } = useParams<string>();
   const [isFetchReady, setIsFetchReady] = useState<boolean>(true);
@@ -24,6 +23,10 @@ function CategoryContainer() {
   );
 
   useEffect(() => {
+    if (error)
+    {
+      props.setError(error);
+    }
     if (isFetchReady === true) {
       setIsFetchReady(false);
     }
@@ -49,6 +52,8 @@ function CategoryContainer() {
     isFetchReady,
     category,
     currentCategory,
+    error,
+    props
   ]);
 
   if (!isLoaded) {
@@ -56,7 +61,6 @@ function CategoryContainer() {
   } else {
     return (
       <div>
-        {error ? <ErrorMessage error = { error }/> : null}
         {items.map((item) => (
           <div key={item.id}>
             <Link to={`/c/${category}/${item.name}`}>Go to item</Link>

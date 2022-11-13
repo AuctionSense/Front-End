@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import KeyCloakService from "../services/KeyCloakService";
-import HomeContainer from "./Home";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import useFetch from "../services/UseFetchApiService";
 import HttpConfig from "../services/HttpConfigService";
+import { useNavigate } from "react-router-dom";
 
-function BalanceContainer() {
+function BalanceContainer(props: {setError: any}) {
   const [fetchBalance, setFetchBalance] = useState<boolean>(true);
   const [amount, setAmount] = useState<string>();
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
@@ -18,6 +18,7 @@ function BalanceContainer() {
     HttpConfig.getHeaders(),
     HttpConfig.methods.GET,
   );
+  const navigate = useNavigate();
   const {
     data: newB,
     error: authError,
@@ -65,11 +66,15 @@ function BalanceContainer() {
   };
 
   useEffect(() => {
-setFetchBalance(false);
+    if (fetchBalance)
+    {
+      setFetchBalance(false);
+    }
     if (isLoaded && data) {
       setBalance(data);
     } else if (error) {
-      setBalance(error.message);
+      props.setError(error);
+      setBalance("0");
     } else {
       setBalance("Loading..");
     }
@@ -77,11 +82,11 @@ setFetchBalance(false);
       setBalance(newB.newBalance);
       setIsSubmit(false);
     }
-  }, [newB, isLoaded, data, error, ]);
+    if (!KeyCloakService.isLoggedIn()) {
+      navigate("/");
+    }
+  }, [newB, isLoaded, data, error, navigate, props, fetchBalance]);
 
-  if (!KeyCloakService.isLoggedIn()) {
-    return <HomeContainer />;
-  }
   return (
     <div>
       {/* SHOW CURRENT BALANCE */}

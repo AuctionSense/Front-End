@@ -1,4 +1,4 @@
-function HomeContainer() {
+function HomeContainer(props: {setError: any}) {
   return (
     <div>
       <h1>Home</h1>

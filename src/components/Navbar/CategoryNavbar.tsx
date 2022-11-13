@@ -6,11 +6,11 @@ import HttpConfig from "../../services/HttpConfigService";
 import UseFetch from "../../services/UseFetchApiService";
 import { LoadingObject } from "../Loading";
 
-function CategoryNavbar() {
+function CategoryNavbar(props: {setError: any}) {
   const [isFetchReady, setIsFetchReady] = useState<boolean>(true);
   const [categories, setCategories] = useState<Category[] | null>(null);
 
-  const { data, isLoaded, error } = UseFetch(
+  let { data, isLoaded, error } = UseFetch(
     "all/categories",
     isFetchReady,
     HttpConfig.getHeaders(),
@@ -21,10 +21,14 @@ function CategoryNavbar() {
     if (isFetchReady === true) {
       setIsFetchReady(false);
     }
+    if (error)
+    {
+      props.setError(error);
+    }
     if (data) {
       setCategories(data);
     }
-  }, [data, isFetchReady]);
+  }, [data, isFetchReady, error, props]);
 
   if (!isLoaded) {
     return (

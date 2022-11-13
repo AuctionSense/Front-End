@@ -16,8 +16,8 @@ function UseFetch(
 ) {
   const [data, setData] = useState<any>(null);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
-  const [responseCode, setResponseCode] = useState<number>();
-  const [error, setError] = useState<Error>();
+  const [responseCode, setResponseCode] = useState<number>(100);
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     if (!isFetchReady) {

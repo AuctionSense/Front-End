@@ -1,12 +1,18 @@
 import styles from "../css/App.module.css";
 
-function ErrorMessage( { error }: {error: Error}) {
+function ErrorMessage( { errors }: {errors: Error[]}) {
     return (
         <div
         className={styles.errorBox}
-        style={error ? { display: "block" } : { display: "none" }}
+        style={errors ? { display: "block" } : { display: "none" }}
       >
-        <h3>Error: {error.message}</h3>
+        {errors.map((error) => {
+            return (
+            <div key={error.name}>
+                {error.message}
+            </div>
+            );
+        })}
       </div>
     );
 }
