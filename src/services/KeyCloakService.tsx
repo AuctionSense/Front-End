@@ -1,8 +1,9 @@
 import Keycloak from "keycloak-js";
 
-const _kc = new Keycloak("/keycloak.json");
+const _kc = new Keycloak("/keycloak.json"); // Create a new Keycloak instance.
 
-const initKeyCloak = (onAuthenticatedCallback: any) => {
+// Initialize Keycloak and pass in callback (render function).
+const initKeyCloak = (onInitCallback: any) => {
   _kc
     .init({
       onLoad: "check-sso",
@@ -10,10 +11,10 @@ const initKeyCloak = (onAuthenticatedCallback: any) => {
         window.location.origin + "/silent-check-sso.html",
       pkceMethod: "S256",
     })
-    .then(() => onAuthenticatedCallback())
+    .then(() => onInitCallback())
     .catch(() => {
       alert("Crucial services are down, please come back later.");
-      onAuthenticatedCallback();
+      onInitCallback();
     });
 };
 

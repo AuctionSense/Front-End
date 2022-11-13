@@ -9,6 +9,7 @@ let headers: any = {};
 
 const getHeaders = () => headers;
 
+// Set header if it doesn't exist.
 const setHeader = (header: string, value: string): string => {
   if (headers[header]) {
     return "Header already exists";

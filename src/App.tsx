@@ -16,6 +16,7 @@ function App() {
   const [errors, setErrors] = useState<Error[]>([]);
   const [currentPath, setCurrentPath] = useState<string>(location.pathname);
 
+  // Create variable function to set error of child component.
   const pull_error = (error: Error) => {
     if (error) {
       setError(error);
@@ -23,11 +24,14 @@ function App() {
   };
 
   useEffect(() => {
+    // Set current path and empty previous errors.
     if (location.pathname !== currentPath)
     {
       setCurrentPath(location.pathname);
       setErrors([]);
     }
+
+    // Set error of child component into errors array.
     if (error) {
       setErrors((errors) => [...errors, error]);
       setError(error);

@@ -54,7 +54,9 @@ function UseFetch(
           setError(err);
           HttpConfig.removeAllHeaders();
         });
+
     };
+    
     fetchData();
   }, [isFetchReady, apiDestination, headers, fetchMethod, body]);
 

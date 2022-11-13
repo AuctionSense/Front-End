@@ -12,6 +12,14 @@ function BalancePage(props: {setError: any}) {
   const [amount, setAmount] = useState<string>();
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
   const [balance, setBalance] = useState<string>();
+  const [headersSet, setHeadersSet] = useState<boolean>(false);
+
+  if (HttpConfig.getHeaders().length === undefined && headersSet === false)
+  {
+    HttpConfig.setHeader("Authentication", `Bearer ${KeyCloakService.getToken()}`);
+    setHeadersSet(true);
+  }
+
   const { data, error, isLoaded } = useFetch(
     `user/balance/${KeyCloakService.getUsername()}`,
     fetchBalance,
