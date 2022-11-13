@@ -6,13 +6,13 @@ import HttpConfig from "../services/HttpConfigService";
 
 function ProductPage(props: {setError: any}) {
   const navigate = useNavigate();
-  const { product } = useParams();
+  const { productName } = useParams();
   const [isFetchReady, setIsFetchReady] = useState<boolean>(true);
-  const [item, setItem] = useState<Product>();
-  const [isItemSet, setIsItemSet] = useState<boolean>(false);
-  const [currentProduct, setCurrentProduct] = useState<string>(product || "");
+  const [isProductSet, setIsProductSet] = useState<boolean>(false);
+  const [product, setProduct] = useState<Product | null>(null);
+  const [currentProduct, setCurrentProduct] = useState<string>(productName || "");
   const { error, isLoaded, data } = UseFetch(
-    `all/items/name=${product}`,
+    `all/items/name=${productName}`,
     isFetchReady,
     HttpConfig.getHeaders(),
     HttpConfig.methods.GET
@@ -22,24 +22,27 @@ function ProductPage(props: {setError: any}) {
     if (isFetchReady === true) {
       setIsFetchReady(false);
     } 
+
     if (error)
     {
       props.setError(error);
     }
-    if (currentProduct !== product)
+
+    if (currentProduct !== productName)
     {
       setIsFetchReady(true);
-      setCurrentProduct(product || "");
+      setCurrentProduct(productName || "");
     }
-    if (item === undefined && isItemSet) {
+    
+    if (product === undefined && isProductSet) {
       navigate("/404", { replace: true });
     }
 
     if (data) {
-      setItem(data);
-      setIsItemSet(true);
+      setProduct(data);
+      setIsProductSet(true);
     }
-  }, [data, navigate, isItemSet, item, currentProduct, isFetchReady, product, error, props]);
+  }, [data, navigate, isProductSet, product, currentProduct, isFetchReady, productName, error, props]);
 
   if (!isLoaded) {
     return (
@@ -50,9 +53,9 @@ function ProductPage(props: {setError: any}) {
   } else {
     return (
       <div>
-        <div key={item?.id}>
-          <h1>{item?.name}</h1>
-          <p>{item?.description}</p>
+        <div key={product?.id}>
+          <h1>{product?.name}</h1>
+          <p>{product?.description}</p>
         </div>
       </div>
     );

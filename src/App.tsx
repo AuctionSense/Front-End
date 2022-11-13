@@ -57,7 +57,7 @@ function App() {
           element={<ProductsPage setError={pull_error} />}
         />
         <Route
-          path="/c/:category/:product"
+          path="/c/:category/:productName"
           element={<ProductPage setError={pull_error} />}
         />
         <Route

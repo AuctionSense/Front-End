@@ -63,11 +63,11 @@ function ProductsPage(props: {setError: any}) {
   } else {
     return (
       <div>
-        {products.map((item) => (
-          <div key={item.id}>
-            <Link to={`/c/${category}/${item.name}`}>Go to item</Link>
-            <h1>{item.name}</h1>
-            <p>{item.description}</p>
+        {products.map((product) => (
+          <div key={product.id}>
+            <Link to={`/c/${category}/${product.name}`}>Go to item</Link>
+            <h1>{product.name}</h1>
+            <p>{product.description}</p>
           </div>
         ))}
       </div>
