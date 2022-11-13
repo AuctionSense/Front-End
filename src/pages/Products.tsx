@@ -3,6 +3,8 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Item from "../models/Product";
 import HttpConfig from "../services/HttpConfigService";
 import UseFetch from "../services/UseFetchApiService";
+import Loading from "../components/Loading";
+import ErrorMessage from "../components/ErrorMessage";
 
 function CategoryContainer() {
   const navigate = useNavigate();
@@ -10,7 +12,9 @@ function CategoryContainer() {
   const [isFetchReady, setIsFetchReady] = useState<boolean>(true);
   const [items, setItems] = useState<Item[]>([]);
   const [isItemsSet, setIsItemsSet] = useState<boolean>(false);
-  const [currentCategory, setCurrentCategory] = useState<string>(category || "");
+  const [currentCategory, setCurrentCategory] = useState<string>(
+    category || ""
+  );
 
   const { error, data, isLoaded } = UseFetch(
     `all/items/category=${category}`,
@@ -22,13 +26,12 @@ function CategoryContainer() {
   useEffect(() => {
     if (isFetchReady === true) {
       setIsFetchReady(false);
-    } 
-    if (currentCategory !== category)
-    {
+    }
+    if (currentCategory !== category) {
       setIsFetchReady(true);
       setCurrentCategory(category || "");
     }
- 
+
     if (items.length === 0 && isItemsSet) {
       navigate("/404", { replace: true });
     }
@@ -37,23 +40,23 @@ function CategoryContainer() {
       setItems(data);
       setIsItemsSet(true);
     }
-  }, [data, navigate, items, isLoaded, isItemsSet, isFetchReady, category, currentCategory]);
+  }, [
+    data,
+    navigate,
+    items,
+    isLoaded,
+    isItemsSet,
+    isFetchReady,
+    category,
+    currentCategory,
+  ]);
 
   if (!isLoaded) {
+    return <Loading />;
+  } else {
     return (
       <div>
-        <h1>{"Loading..."}</h1>
-      </div>
-    );
-  } else if (error) {
-    return (
-      <div>
-        <h1>{error.message}</h1>
-      </div>
-    );
-  } else if (items) {
-    return (
-      <div>
+        {error ? <ErrorMessage error = { error }/> : null}
         {items.map((item) => (
           <div key={item.id}>
             <Link to={`/c/${category}/${item.name}`}>Go to item</Link>
@@ -61,12 +64,6 @@ function CategoryContainer() {
             <p>{item.description}</p>
           </div>
         ))}
-      </div>
-    );
-  } else {
-    return (
-      <div>
-        <h1>Something unexpected happened!</h1>
       </div>
     );
   }

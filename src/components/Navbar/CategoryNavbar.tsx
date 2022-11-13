@@ -28,7 +28,7 @@ function CategoryNavbar() {
 
   if (!isLoaded) {
     return (
-      <div className={styles.dropDownContent}>
+      <div className={styles.dropDownContent} style={{color: "black"}}>
         <LoadingObject />
       </div>
     );

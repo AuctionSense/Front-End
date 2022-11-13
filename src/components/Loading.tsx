@@ -1,9 +1,17 @@
 function Loading() {
-  return <div>Loading...</div>;
+  return (
+    <div>
+      <h1>{"Loading..."}</h1>
+    </div>
+  );
 }
 
 function LoadingObject() {
-  return <div>Loading...</div>;
+  return (
+    <div>
+      <h1>{"Loading..."}</h1>
+    </div>
+  );
 }
 
 export default Loading;
