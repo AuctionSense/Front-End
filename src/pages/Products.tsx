@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import Product from "../models/Product";
 import HttpConfig from "../services/HttpConfigService";
 import UseFetch from "../services/UseFetchApiService";
 import Loading from "../components/Loading";
@@ -13,14 +12,14 @@ function ProductsPage(props: { setError: any }) {
   );
 
   const [isFetchReady, setIsFetchReady] = useState<boolean>(true);
-  const [products, setProducts] = useState<Product[] | null>(null);
+  const [products, setProducts] = useState<any[] | null>(null);
 
   if (isFetchReady) {
     HttpConfig.setHeader("Content-Type", "application/json");
   }
 
   const { error, data, isLoaded } = UseFetch(
-    `all/items/category=${category}`,
+    `all/products/category=${category}`,
     isFetchReady,
     HttpConfig.methods.GET
   );
@@ -60,13 +59,14 @@ function ProductsPage(props: { setError: any }) {
   if (!isLoaded) {
     return <Loading />;
   } else {
+    console.log(products);
     return (
       <div>
         {products?.map((product) => (
-          <div key={product.id}>
-            <Link to={`/c/${category}/${product.name}`}>Go to item</Link>
-            <h1>{product.name}</h1>
-            <p>{product.description}</p>
+          <div key={product[0]}>
+            <Link to={`/c/${category}/${product[1]}`}>Go to item</Link>
+            <h1>{product[1]}</h1>
+            <p>{product[2]}</p>
           </div>
         ))}
       </div>
