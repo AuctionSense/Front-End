@@ -6,37 +6,42 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import useFetch from "../services/UseFetchApiService";
 import HttpConfig from "../services/HttpConfigService";
 import { useNavigate } from "react-router-dom";
+import { LoadingObject } from "../components/Loading";
 
-function BalancePage(props: {setError: any}) {
-  const [amount, setAmount] = useState<string>();
+function BalancePage(props: { setError: any }) {
+  const [amount, setAmount] = useState<string | null>(null);
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
-  const navigate = useNavigate();
 
   const [isFetchReady, setIsFetchReady] = useState<boolean>(true);
   const [balance, setBalance] = useState<string>();
 
+  const navigate = useNavigate();
+
+  let patternTwoDigisAfterComma = /^\d+(\.\d{0,2})?$/;
+
   if (isFetchReady || isSubmit) {
     HttpConfig.setHeader("Content-Type", "application/json");
-    HttpConfig.setHeader("Authorization", `Bearer ${KeyCloakService.getToken()}`);
+    HttpConfig.setHeader(
+      "Authorization",
+      `Bearer ${KeyCloakService.getToken()}`
+    );
   }
-  
+
   const { data, error, isLoaded } = useFetch(
     `user/balance/${KeyCloakService.getUsername()}`,
     isFetchReady,
-    HttpConfig.methods.GET,
+    HttpConfig.methods.GET
   );
 
   const {
-    data: newB,
-    error: authError,
-    isLoaded: isLoadedAuth,
+    data: newBalance,
+    error: putError,
+    isLoaded: putIsLoaded,
   } = useFetch(
     `user/balance/${KeyCloakService.getUsername()}/${amount}`,
     isSubmit,
-    HttpConfig.methods.PUT,
+    HttpConfig.methods.PUT
   );
-
-  let patternTwoDigisAfterComma = /^\d+(\.\d{0,2})?$/;
 
   const schema = yup.object().shape({
     amount: yup
@@ -73,13 +78,10 @@ function BalancePage(props: {setError: any}) {
       navigate("/");
     }
 
-    if (isFetchReady)
-    {
+    if (isFetchReady) {
       setIsFetchReady(false);
-    }
-    else if (isSubmit)
-    {
-       setIsSubmit(false);
+    } else if (isSubmit) {
+      setIsSubmit(false);
     }
 
     if (data) {
@@ -87,21 +89,38 @@ function BalancePage(props: {setError: any}) {
     } else if (error) {
       props.setError(error);
       setBalance("0");
-    } else {
-      setBalance("Loading..");
     }
 
-    if (newB) {
-      setBalance(newB.newBalance);
+    if (newBalance) {
+      setBalance(newBalance.newBalance);
+    } else if (putError) {
+      props.setError(putError);
+      setBalance("0");
     }
-
-  }, [newB, isLoaded, data, error, navigate, props, isFetchReady, isSubmit]);
+  }, [
+    newBalance,
+    data,
+    error,
+    navigate,
+    props,
+    isFetchReady,
+    isSubmit,
+    putError,
+  ]);
 
   return (
     <div>
-      {/* SHOW CURRENT BALANCE */}
       <h1>Current Balance</h1>
-      <p>€{balance}</p>
+      <p>
+        €
+        {isLoaded ? (
+          balance
+        ) : <LoadingObject /> || putIsLoaded ? (
+          balance
+        ) : (
+          <LoadingObject />
+        )}
+      </p>
       <h1>Add balance</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <input

@@ -29,17 +29,15 @@ function ProductPage(props: { setError: any }) {
       setIsFetchReady(false);
     }
 
-    if (error) {
-      props.setError(error); // Set error in parent component.
-    }
-
     // If product changed fetch new product.
     if (currentProduct !== productName) {
       setIsFetchReady(true);
       setCurrentProduct(productName || "");
     }
 
-    if (data) {
+    if (error) {
+      props.setError(error); // Set error in parent component.
+    } else if (data) {
       setProduct(data);
     }
 
@@ -56,7 +54,7 @@ function ProductPage(props: { setError: any }) {
     error,
     props,
     isLoaded,
-    responseCode
+    responseCode,
   ]);
 
   if (!isLoaded) {

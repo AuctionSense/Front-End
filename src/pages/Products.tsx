@@ -15,8 +15,7 @@ function ProductsPage(props: { setError: any }) {
   const [isFetchReady, setIsFetchReady] = useState<boolean>(true);
   const [products, setProducts] = useState<Product[] | null>(null);
 
-  if (isFetchReady)
-  {
+  if (isFetchReady) {
     HttpConfig.setHeader("Content-Type", "application/json");
   }
 
@@ -31,17 +30,15 @@ function ProductsPage(props: { setError: any }) {
       setIsFetchReady(false);
     }
 
-    if (error) {
-      props.setError(error); // Set error in parent component.
-    }
-
     // If product changed fetch new product.
     if (currentCategory !== category) {
       setIsFetchReady(true);
       setCurrentCategory(category || "");
     }
 
-    if (data) {
+    if (error) {
+      props.setError(error); // Set error in parent component.
+    } else if (data) {
       setProducts(data);
     }
 
