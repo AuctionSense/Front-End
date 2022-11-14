@@ -4,45 +4,64 @@ import UseFetch from "../services/UseFetchApiService";
 import { useEffect, useState } from "react";
 import HttpConfig from "../services/HttpConfigService";
 
-function ProductPage(props: {setError: any}) {
+function ProductPage(props: { setError: any }) {
   const navigate = useNavigate();
   const { productName } = useParams();
+  const [currentProduct, setCurrentProduct] = useState<string>(
+    productName || ""
+  );
+
   const [isFetchReady, setIsFetchReady] = useState<boolean>(true);
-  const [isProductSet, setIsProductSet] = useState<boolean>(false);
   const [product, setProduct] = useState<Product | null>(null);
-  const [currentProduct, setCurrentProduct] = useState<string>(productName || "");
-  const { error, isLoaded, data } = UseFetch(
+
+  if (isFetchReady) {
+    HttpConfig.setHeader("Content-Type", "application/json");
+  }
+
+  const { error, isLoaded, data, responseCode } = UseFetch(
     `all/items/name=${productName}`,
     isFetchReady,
-    HttpConfig.getHeaders(),
     HttpConfig.methods.GET
   );
 
-  useEffect(() => {
-    if (isFetchReady === true) {
-      setIsFetchReady(false);
-    } 
+  if (isFetchReady) {
+    HttpConfig.removeAllHeaders();
+  }
 
-    if (error)
-    {
-      props.setError(error);
+  useEffect(() => {
+    if (isFetchReady) {
+      setIsFetchReady(false);
     }
 
-    if (currentProduct !== productName)
-    {
+    if (error) {
+      props.setError(error); // Set error in parent component.
+    }
+
+    // If product changed fetch new product.
+    if (currentProduct !== productName) {
       setIsFetchReady(true);
       setCurrentProduct(productName || "");
-    }
-    
-    if (product === undefined && isProductSet) {
-      navigate("/404", { replace: true });
     }
 
     if (data) {
       setProduct(data);
-      setIsProductSet(true);
     }
-  }, [data, navigate, isProductSet, product, currentProduct, isFetchReady, productName, error, props]);
+
+    if (responseCode === 204 && isLoaded) {
+      navigate("/404", { replace: true });
+    }
+  }, [
+    data,
+    navigate,
+    product,
+    currentProduct,
+    isFetchReady,
+    productName,
+    error,
+    props,
+    isLoaded,
+    responseCode
+  ]);
 
   if (!isLoaded) {
     return (
@@ -59,7 +78,7 @@ function ProductPage(props: {setError: any}) {
         </div>
       </div>
     );
-  } 
+  }
 }
 
 export default ProductPage;

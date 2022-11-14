@@ -5,33 +5,42 @@ import HttpConfig from "../services/HttpConfigService";
 import UseFetch from "../services/UseFetchApiService";
 import Loading from "../components/Loading";
 
-function ProductsPage(props: {setError: any}) {
+function ProductsPage(props: { setError: any }) {
   const navigate = useNavigate();
   const { category } = useParams<string>();
-  const [isFetchReady, setIsFetchReady] = useState<boolean>(true);
-  const [products, setProducts] = useState<Product[]>([]);
-  const [isProductsSet, setIsProductsSet] = useState<boolean>(false);
   const [currentCategory, setCurrentCategory] = useState<string>(
     category || ""
   );
 
+  const [isFetchReady, setIsFetchReady] = useState<boolean>(true);
+  const [products, setProducts] = useState<Product[] | null>(null);
+
+  if (isFetchReady)
+  {
+    HttpConfig.setHeader("Content-Type", "application/json");
+  }
+
   const { error, data, isLoaded } = UseFetch(
     `all/items/category=${category}`,
     isFetchReady,
-    HttpConfig.getHeaders(),
     HttpConfig.methods.GET
   );
 
+  if (isFetchReady)
+  {
+    HttpConfig.removeAllHeaders();
+  }
+
   useEffect(() => {
-    if (isFetchReady === true) {
+    if (isFetchReady) {
       setIsFetchReady(false);
     }
 
-    if (error)
-    {
-      props.setError(error);
+    if (error) {
+      props.setError(error); // Set error in parent component.
     }
 
+    // If product changed fetch new product.
     if (currentCategory !== category) {
       setIsFetchReady(true);
       setCurrentCategory(category || "");
@@ -39,10 +48,9 @@ function ProductsPage(props: {setError: any}) {
 
     if (data) {
       setProducts(data);
-      setIsProductsSet(true);
     }
 
-    if (products.length === 0 && isProductsSet) {
+    if (products?.length === 0 && isLoaded) {
       navigate("/404", { replace: true });
     }
   }, [
@@ -54,7 +62,6 @@ function ProductsPage(props: {setError: any}) {
     error,
     props,
     isLoaded,
-    isProductsSet,
     isFetchReady,
   ]);
 
@@ -63,7 +70,7 @@ function ProductsPage(props: {setError: any}) {
   } else {
     return (
       <div>
-        {products.map((product) => (
+        {products?.map((product) => (
           <div key={product.id}>
             <Link to={`/c/${category}/${product.name}`}>Go to item</Link>
             <h1>{product.name}</h1>

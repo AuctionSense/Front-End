@@ -10,10 +10,13 @@ function CategoryNavbar(props: {setError: any}) {
   const [isFetchReady, setIsFetchReady] = useState<boolean>(true);
   const [categories, setCategories] = useState<Category[] | null>(null);
 
+  if (isFetchReady) {
+    HttpConfig.setHeader("Content-Type", "application/json");
+  }
+
   let { data, isLoaded, error } = UseFetch(
     "all/categories",
     isFetchReady,
-    HttpConfig.getHeaders(),
     HttpConfig.methods.GET
   );
 

@@ -8,25 +8,24 @@ import HttpConfig from "../services/HttpConfigService";
 import { useNavigate } from "react-router-dom";
 
 function BalancePage(props: {setError: any}) {
-  const [fetchBalance, setFetchBalance] = useState<boolean>(true);
   const [amount, setAmount] = useState<string>();
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
+  const navigate = useNavigate();
+
+  const [isFetchReady, setIsFetchReady] = useState<boolean>(true);
   const [balance, setBalance] = useState<string>();
-  const [headersSet, setHeadersSet] = useState<boolean>(false);
 
-  if (HttpConfig.getHeaders().length === undefined && headersSet === false)
-  {
-    HttpConfig.setHeader("Authentication", `Bearer ${KeyCloakService.getToken()}`);
-    setHeadersSet(true);
+  if (isFetchReady || isSubmit) {
+    HttpConfig.setHeader("Content-Type", "application/json");
+    HttpConfig.setHeader("Authorization", `Bearer ${KeyCloakService.getToken()}`);
   }
-
+  
   const { data, error, isLoaded } = useFetch(
     `user/balance/${KeyCloakService.getUsername()}`,
-    fetchBalance,
-    HttpConfig.getHeaders(),
+    isFetchReady,
     HttpConfig.methods.GET,
   );
-  const navigate = useNavigate();
+
   const {
     data: newB,
     error: authError,
@@ -34,12 +33,8 @@ function BalancePage(props: {setError: any}) {
   } = useFetch(
     `user/balance/${KeyCloakService.getUsername()}/${amount}`,
     isSubmit,
-    HttpConfig.getHeaders(),
-    HttpConfig.methods.GET,
+    HttpConfig.methods.PUT,
   );
-  
-
-  console.log(authError, isLoadedAuth);
 
   let patternTwoDigisAfterComma = /^\d+(\.\d{0,2})?$/;
 
@@ -74,11 +69,20 @@ function BalancePage(props: {setError: any}) {
   };
 
   useEffect(() => {
-    if (fetchBalance)
-    {
-      setFetchBalance(false);
+    if (!KeyCloakService.isLoggedIn()) {
+      navigate("/");
     }
-    if (isLoaded && data) {
+
+    if (isFetchReady)
+    {
+      setIsFetchReady(false);
+    }
+    else if (isSubmit)
+    {
+       setIsSubmit(false);
+    }
+
+    if (data) {
       setBalance(data);
     } else if (error) {
       props.setError(error);
@@ -86,14 +90,12 @@ function BalancePage(props: {setError: any}) {
     } else {
       setBalance("Loading..");
     }
+
     if (newB) {
       setBalance(newB.newBalance);
-      setIsSubmit(false);
     }
-    if (!KeyCloakService.isLoggedIn()) {
-      navigate("/");
-    }
-  }, [newB, isLoaded, data, error, navigate, props, fetchBalance]);
+
+  }, [newB, isLoaded, data, error, navigate, props, isFetchReady, isSubmit]);
 
   return (
     <div>

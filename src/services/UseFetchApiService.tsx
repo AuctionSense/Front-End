@@ -10,7 +10,6 @@ import KeyCloakService from "./KeyCloakService";
 function UseFetch(
   apiDestination: string,
   isFetchReady: boolean,
-  headers: any,
   fetchMethod: string,
   body: any = null
 ) {
@@ -18,6 +17,11 @@ function UseFetch(
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [responseCode, setResponseCode] = useState<number>(100);
   const [error, setError] = useState<Error | null>(null);
+  const [headers] = useState<any>(HttpConfig.getHeaders());
+  if (Object.keys(HttpConfig.getHeaders()).length !== 0)
+  {
+    HttpConfig.removeAllHeaders();
+  }
 
   useEffect(() => {
     if (!isFetchReady) {
@@ -47,18 +51,15 @@ function UseFetch(
         .then((data) => {
           setIsLoaded(true);
           setData(data);
-          HttpConfig.removeAllHeaders();
         })
         .catch((err) => {
           setIsLoaded(true);
           setError(err);
-          HttpConfig.removeAllHeaders();
         });
-
     };
-    
+
     fetchData();
-  }, [isFetchReady, apiDestination, headers, fetchMethod, body]);
+  }, [isFetchReady, apiDestination, fetchMethod, body, headers]);
 
   return { isLoaded, error, data, responseCode };
 }

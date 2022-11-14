@@ -5,11 +5,9 @@ import KeyCloakService from "../services/KeyCloakService";
 import BalanceNavbar from "./navbar/BalanceNavbar";
 import LoginButton from "./buttons/LoginButton";
 import LogoutButton from "./buttons/LogoutButton";
-import HttpConfig from "../services/HttpConfigService";
 import CategoryNavbar from "./navbar/CategoryNavbar";
 
 function Navbar(props: {setError: any}) {
-  const [headersAdded, setHeadersAdded] = useState<boolean>(false);
   const [username, setUsername] = useState<string | null>(null);
   const [sessionButton, setSessionButton] = useState<JSX.Element>(
     <LoginButton />
@@ -31,17 +29,12 @@ function Navbar(props: {setError: any}) {
       setError(error);
     }
 
-    if (!headersAdded) {
-      HttpConfig.setHeader("Content-Type", "application/json");
-      setHeadersAdded(true);
-    }
-
     if (KeyCloakService.isLoggedIn()) {
       setSessionButton(<LogoutButton />);
       setBalanceButton(<BalanceNavbar />);
       setUsername(KeyCloakService.getUsername());
     }
-  }, [headersAdded, error, props]);
+  }, [error, props]);
 
   return (
     <nav className={styles.navBarTop}>
