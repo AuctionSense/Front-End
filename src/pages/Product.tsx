@@ -24,10 +24,6 @@ function ProductPage(props: { setError: any }) {
     HttpConfig.methods.GET
   );
 
-  if (isFetchReady) {
-    HttpConfig.removeAllHeaders();
-  }
-
   useEffect(() => {
     if (isFetchReady) {
       setIsFetchReady(false);
