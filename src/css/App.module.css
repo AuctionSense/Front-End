@@ -100,7 +100,8 @@ main {
 }
 
 footer {
-  height: 10%;
+  position: absolute;
+  height: 5rem;
   bottom: 0;
   width: 100%;
   background-color: #FF7000;

@@ -3,13 +3,14 @@
 }
 
 .verticalNav {
-    width: 22%;
+  width: 22%;
   max-width: 22%;
 }
 
 .cardContainer {
   display: flex;
   flex-wrap: wrap;
+  padding-bottom: 6rem;
   margin-top: 25px;
 }
 
