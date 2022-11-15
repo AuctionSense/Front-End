@@ -60,7 +60,6 @@ function ProductsPage(props: { setError: any }) {
   if (!isLoaded) {
     return <Loading />;
   } else {
-    console.log(products);
     return (
       <div>
         {products?.map((product) => (
