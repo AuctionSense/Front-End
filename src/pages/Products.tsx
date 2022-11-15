@@ -87,7 +87,7 @@ function ProductsPage(props: { setError: any }) {
               <li>{" >"}</li>
               <li>
                 <Link to={`/c/${category}`} className={styles.breadcrumbLink}>
-                  Games
+                  {category}
                 </Link>
               </li>
             </ul>
