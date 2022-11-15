@@ -6,7 +6,6 @@ import HomePage from "./pages/Home";
 import ProductPage from "./pages/Product";
 import BalancePage from "./pages/Balance";
 import NotFoundPage from "./pages/NotFound";
-import KeyCloakService from "./services/KeyCloakService";
 import { useEffect, useState } from "react";
 import ErrorMessage from "./components/ErrorMessage";
 
@@ -43,10 +42,7 @@ function App() {
       <main>
         {errors ? <ErrorMessage errors={errors} /> : null}
 
-        <button onClick={KeyCloakService.updateToken}>Refreshtoken</button>
-        <button disabled>test</button>
       </main>
-      <Footer />
 
       <Routes>
         <Route path="*" element={<Navigate to="/404" replace />} />
@@ -65,6 +61,7 @@ function App() {
           element={<BalancePage setError={pull_error} />}
         />
       </Routes>
+      <Footer />
     </div>
   );
 }

@@ -4,6 +4,7 @@ import HttpConfig from "../services/HttpConfigService";
 import UseFetch from "../services/UseFetchApiService";
 import Loading from "../components/Loading";
 import Product from "../models/Product";
+import styles from "../css/Products.module.css";
 
 function ProductsPage(props: { setError: any }) {
   const navigate = useNavigate();
@@ -65,13 +66,30 @@ function ProductsPage(props: { setError: any }) {
     );
   } else {
     return (
-      <main>
-        <div>
+      <main className={styles.productsMain}>
+        <nav className={styles.verticalNav}>VERTICAL NAV BAR</nav>
+        <div className={styles.cardContainer}>
           {products?.map((product) => (
-            <div key={product.id}>
-              <Link to={`/c/${category}/${product.name}`}>Go to item</Link>
-              <h1>{product.name}</h1>
-              <p>{product.description}</p>
+            <div key={product.id} className={styles.productCard}>
+              <Link
+                className={styles.productCardLink}
+                to={`/c/${category}/${product.name}`}
+              >
+                <img
+                  src="/images/Minecraft.png"
+                  alt="Product"
+                  className={styles.productImage}
+                ></img>
+              </Link>
+              <div>
+                <Link
+                  className={styles.productCardLink}
+                  to={`/c/${category}/${product.name}`}
+                >
+                  <h3>{product.name}</h3>
+                </Link>
+                <p>{product.description}</p>
+              </div>
             </div>
           ))}
         </div>
