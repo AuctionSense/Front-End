@@ -58,18 +58,24 @@ function ProductsPage(props: { setError: any }) {
   ]);
 
   if (!isLoaded) {
-    return <Loading />;
+    return (
+      <main>
+        <Loading />
+      </main>
+    );
   } else {
     return (
-      <div>
-        {products?.map((product) => (
-          <div key={product.id}>
-            <Link to={`/c/${category}/${product.name}`}>Go to item</Link>
-            <h1>{product.name}</h1>
-            <p>{product.description}</p>
-          </div>
-        ))}
-      </div>
+      <main>
+        <div>
+          {products?.map((product) => (
+            <div key={product.id}>
+              <Link to={`/c/${category}/${product.name}`}>Go to item</Link>
+              <h1>{product.name}</h1>
+              <p>{product.description}</p>
+            </div>
+          ))}
+        </div>
+      </main>
     );
   }
 }

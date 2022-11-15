@@ -109,6 +109,8 @@ function BalancePage(props: { setError: any }) {
   ]);
 
   return (
+    <main>
+
     <div>
       <h1>Current Balance</h1>
       <p>
@@ -136,6 +138,7 @@ function BalancePage(props: { setError: any }) {
         <input type="submit" />
       </form>
     </div>
+    </main>
   );
 }
 

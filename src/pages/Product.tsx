@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import UseFetch from "../services/UseFetchApiService";
 import { useEffect, useState } from "react";
 import HttpConfig from "../services/HttpConfigService";
+import Loading from "../components/Loading";
 
 function ProductPage(props: { setError: any }) {
   const navigate = useNavigate();
@@ -59,18 +60,19 @@ function ProductPage(props: { setError: any }) {
 
   if (!isLoaded) {
     return (
-      <div>
-        <h1>{"Loading..."}</h1>
-      </div>
+      <main>
+          <Loading />
+      </main>
+
     );
   } else {
     return (
-      <div>
+      <main>
         <div key={product?.id}>
           <h1>{product?.name}</h1>
           <p>{product?.description}</p>
         </div>
-      </div>
+      </main>
     );
   }
 }
