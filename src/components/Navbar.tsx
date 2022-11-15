@@ -7,7 +7,7 @@ import LoginButton from "./buttons/LoginButton";
 import LogoutButton from "./buttons/LogoutButton";
 import CategoryNavbar from "./navbar/CategoryNavbar";
 
-function Navbar(props: {setError: any}) {
+function Navbar(props: { setError: any }) {
   const [username, setUsername] = useState<string | null>(null);
   const [sessionButton, setSessionButton] = useState<JSX.Element>(
     <LoginButton />
@@ -16,15 +16,13 @@ function Navbar(props: {setError: any}) {
   const [error, setError] = useState<Error | null>(null);
 
   const pull_error = (error: Error) => {
-    if (error)
-    {
+    if (error) {
       setError(error);
     }
-  }
+  };
 
   useEffect(() => {
-    if (error)
-    {
+    if (error) {
       props.setError(error);
       setError(error);
     }
@@ -37,23 +35,24 @@ function Navbar(props: {setError: any}) {
   }, [error, props]);
 
   return (
-    <nav className={styles.navBarTop}>
-      <div>
+    <nav className={styles.navbar}>
         <ul>
-          <li className={styles.navBarTopFront}>
-            <Link className={styles.navBarTopLink} to="/">
-              Image placeholder
+          <li>
+            <Link to="/" >
+              <img className={styles.logo} alt="AuctionSense logo" src="/images/Logo.png">
+              </img>
             </Link>
           </li>
-          <li className={`${styles.dropDown} ${styles.navBarTopFront}`}>
+          <li className={`${styles.dropDown}`}>
             <p>Category</p>
-            {<CategoryNavbar setError={pull_error}/>}
+            {<CategoryNavbar setError={pull_error} />}
           </li>
-          <li className={styles.navBarTopEnd}>{sessionButton}</li>
-          <li className={styles.navBarTopEnd}>{username}</li>
-          {balanceButton}
+          <li className={styles.navbarEnd}>{sessionButton}</li>
+          <li className={`${styles.navbarEnd} ${styles.navbarLink}`}>
+            {username}
+          </li>
+          <li className={styles.navbarEnd}>{balanceButton}</li>
         </ul>
-      </div>
     </nav>
   );
 }

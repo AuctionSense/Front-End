@@ -1,55 +1,68 @@
-html,
-body {
-  margin: 0;
-  padding: 0;
+.navbar {
+  background-color: #FF7000;
+  display: flex;
+  line-height: 1;
+  padding-left: 10%;
+  padding-right: 10%;
 }
 
-.navBarTop ul {
+.navbar ul {
+  margin: 0;
+  width: 100%;
   list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #333;
 }
 
-.navBarTopEnd {
-  float: right;
-}
-
-.navBarTopFront {
+.logo {
   float: left;
+  max-height: 80%;
+  max-width: 80%;
+  margin-right: 25px;
 }
 
-.navBarTop li {
-  color: white;
-  display: block;
-  text-align: center;
-  padding: 14px 16px;
+.navbarFront {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  margin-right: 25px;
 }
 
-.navBarTopLink {
+.navbarEnd {  
+  height: 100%;
+  display: flex;
+  align-items: center;
+  float: right;
+  margin-left: 25px;
+  text-decoration: none;
+  cursor: default;
+}
+
+.navbar li {
   color: white;
   text-decoration: none;
+}
+
+.navbarLink {
+    color: white;
+    text-decoration: none;
+}
+
+.navbarLink:hover {
+  text-decoration: underline;
 }
 
 .dropDown {
   position: relative;
   display: inline-block;
-}
-
-.dropDown p {
-  margin: 0;
-  border: none;
   cursor: default;
+  padding: 16px;
 }
 
 .dropDownContent {
   display: none;
-  position: fixed;
+  position: absolute;
   background-color: #f9f9f9;
-  min-width: 10%;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  top: 4.3%;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
 }
 
@@ -61,15 +74,23 @@ body {
 }
 
 .dropDownContentLink:hover {
-  background-color: #f1f1f1;
+  background-color: #ffc5833f;
 }
 
 .dropDown:hover .dropDownContent {
   display: block;
 }
 
-.navBarTop li:hover {
-  background-color: #111;
+.sessionButton {
+  background-color: #FF7000;
+  color: white;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.sessionButton:hover {
+  text-decoration: underline;
 }
 
 footer {

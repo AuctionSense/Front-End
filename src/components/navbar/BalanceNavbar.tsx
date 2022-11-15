@@ -3,11 +3,9 @@ import styles from "../../css/App.module.css";
 
 function BalanceNavbar() {
   return (
-    <li className={styles.navBarTopEnd}>
-      <Link className={styles.navBarTopLink} to={"/balance"}>
+      <Link className={styles.navbarLink} to={"/balance"}>
         Add Balance
       </Link>
-    </li>
   );
 }
 
