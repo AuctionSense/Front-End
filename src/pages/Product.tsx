@@ -19,7 +19,7 @@ function ProductPage(props: { setError: any }) {
   }
 
   const { error, isLoaded, data, responseCode } = UseFetch(
-    `all/products/name=${productName}`,
+    `all/products/name/${productName}`,
     isFetchReady,
     HttpConfig.methods.GET
   );
