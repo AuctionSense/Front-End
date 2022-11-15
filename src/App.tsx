@@ -25,8 +25,7 @@ function App() {
 
   useEffect(() => {
     // Set current path and empty previous errors.
-    if (location.pathname !== currentPath)
-    {
+    if (location.pathname !== currentPath) {
       setCurrentPath(location.pathname);
       setErrors([]);
     }
@@ -41,11 +40,12 @@ function App() {
   return (
     <div className="App">
       <Navbar setError={pull_error} />
-      {errors ? <ErrorMessage errors={errors} /> : null}
+      <main>
+        {errors ? <ErrorMessage errors={errors} /> : null}
 
-      <button onClick={KeyCloakService.updateToken}>Refreshtoken</button>
-      <button disabled>test</button>
-
+        <button onClick={KeyCloakService.updateToken}>Refreshtoken</button>
+        <button disabled>test</button>
+      </main>
       <Footer />
 
       <Routes>
