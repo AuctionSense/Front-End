@@ -26,6 +26,10 @@ function ProductsPage(props: { setError: any }) {
     HttpConfig.methods.GET
   );
 
+  const backEvent = () => {
+    navigate("/");
+  };
+
   useEffect(() => {
     if (isFetchReady) {
       setIsFetchReady(false);
@@ -67,7 +71,50 @@ function ProductsPage(props: { setError: any }) {
   } else {
     return (
       <main className={styles.productsMain}>
-        <nav className={styles.verticalNav}>VERTICAL NAV BAR</nav>
+        <nav className={styles.verticalNav}>
+          <div className={styles.breadcrumb}>
+            <ul>
+              <li>
+                <button className={styles.breadcrumbButton} onClick={backEvent}>
+                  Back
+                </button>
+              </li>
+              <li>
+                <Link to={"/"} className={styles.breadcrumbLink}>
+                  Home
+                </Link>
+              </li>
+              <li>{" >"}</li>
+              <li>
+                <Link to={`/c/${category}`} className={styles.breadcrumbLink}>
+                  Games
+                </Link>
+              </li>
+            </ul>
+          </div>
+          <div className={styles.filter}>
+            <h1>Filter</h1>
+            <ul>
+              <li>New</li>
+              <li>Populair</li>
+            </ul>
+          </div>
+          <div className={styles.genre}>
+            <h3>Genre</h3>
+            <ul>
+              <li>Genre1</li>
+            </ul>
+          </div>
+          <div className={styles.price}>
+            <h3>Price</h3>
+            <ul>
+              <li>€</li>
+              <li>
+                drag price bar
+              </li>
+            </ul>
+          </div>
+        </nav>
         <div className={styles.cardContainer}>
           {products?.map((product) => (
             <div key={product.id} className={styles.productCard}>
