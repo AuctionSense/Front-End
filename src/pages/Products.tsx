@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import HttpConfig from "../services/HttpConfigService";
 import UseFetch from "../services/UseFetchApiService";
 import Loading from "../components/Loading";
+import Product from "../models/Product";
 
 function ProductsPage(props: { setError: any }) {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ function ProductsPage(props: { setError: any }) {
   );
 
   const [isFetchReady, setIsFetchReady] = useState<boolean>(true);
-  const [products, setProducts] = useState<any[] | null>(null);
+  const [products, setProducts] = useState<Product[] | null>(null);
 
   if (isFetchReady) {
     HttpConfig.setHeader("Content-Type", "application/json");
@@ -63,10 +64,10 @@ function ProductsPage(props: { setError: any }) {
     return (
       <div>
         {products?.map((product) => (
-          <div key={product[0]}>
-            <Link to={`/c/${category}/${product[1]}`}>Go to item</Link>
-            <h1>{product[1]}</h1>
-            <p>{product[2]}</p>
+          <div key={product.id}>
+            <Link to={`/c/${category}/${product.name}`}>Go to item</Link>
+            <h1>{product.name}</h1>
+            <p>{product.description}</p>
           </div>
         ))}
       </div>
