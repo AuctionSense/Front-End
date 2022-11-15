@@ -1,15 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
+import "./css/index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import KeyCloakService from "./services/KeyCloakService";
 
+// Get root element.
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
+// Create variable function to render app.
 const renderApp = () =>
   root.render(
     <React.StrictMode>
@@ -19,6 +21,7 @@ const renderApp = () =>
     </React.StrictMode>
   );
 
+// Pass render function to keycloak init as callback.
 KeyCloakService.initKeyCloak(renderApp);
 
 // If you want to start measuring performance in your app, pass a function

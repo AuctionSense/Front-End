@@ -83,3 +83,16 @@ footer {
   color: white;
   text-align: center;
 }
+
+.errorBox {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #c0392b;
+  color: white;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 18px;
+  width: 40%;
+  text-align: center;
+}

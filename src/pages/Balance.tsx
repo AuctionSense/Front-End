@@ -1,31 +1,47 @@
 import { useEffect, useState } from "react";
 import KeyCloakService from "../services/KeyCloakService";
-import HomeContainer from "./HomeController";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import UseFetchAuthGet, { UseFetchAuthPut } from "../services/UseFetchApiAuth";
+import useFetch from "../services/UseFetchApiService";
+import HttpConfig from "../services/HttpConfigService";
+import { useNavigate } from "react-router-dom";
+import { LoadingObject } from "../components/Loading";
 
-function BalanceContainer() {
-  const [amount, setAmount] = useState<string>();
+function BalancePage(props: { setError: any }) {
+  const [amount, setAmount] = useState<string | null>(null);
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
-  const [balance, setBalance] = useState<string>();
-  const { data, error, isLoaded } = UseFetchAuthGet(
-    `user/balance/${KeyCloakService.getUsername()}`,
-    true
-  );
-  const {
-    data: newB,
-    error: authError,
-    isLoaded: isLoadedAuth,
-  } = UseFetchAuthPut(
-    `user/balance/${KeyCloakService.getUsername()}/${amount}`,
-    isSubmit
-  );
 
-  console.log(authError, isLoadedAuth);
+  const [isFetchReady, setIsFetchReady] = useState<boolean>(true);
+  const [balance, setBalance] = useState<string>();
+
+  const navigate = useNavigate();
 
   let patternTwoDigisAfterComma = /^\d+(\.\d{0,2})?$/;
+
+  if (isFetchReady || isSubmit) {
+    HttpConfig.setHeader("Content-Type", "application/json");
+    HttpConfig.setHeader(
+      "Authorization",
+      `Bearer ${KeyCloakService.getToken()}`
+    );
+  }
+
+  const { data, error, isLoaded } = useFetch(
+    `user/balance/${KeyCloakService.getUsername()}`,
+    isFetchReady,
+    HttpConfig.methods.GET
+  );
+
+  const {
+    data: newBalance,
+    error: putError,
+    isLoaded: putIsLoaded,
+  } = useFetch(
+    `user/balance/${KeyCloakService.getUsername()}/${amount}`,
+    isSubmit,
+    HttpConfig.methods.PUT
+  );
 
   const schema = yup.object().shape({
     amount: yup
@@ -58,27 +74,53 @@ function BalanceContainer() {
   };
 
   useEffect(() => {
-    if (isLoaded && data) {
-      setBalance(data);
-    } else if (error) {
-      setBalance(error.message);
-    } else {
-      setBalance("Loading..");
+    if (!KeyCloakService.isLoggedIn()) {
+      navigate("/");
     }
-    if (newB) {
-      setBalance(newB.newBalance);
+
+    if (isFetchReady) {
+      setIsFetchReady(false);
+    } else if (isSubmit) {
       setIsSubmit(false);
     }
-  }, [newB, isLoaded, data, error]);
 
-  if (!KeyCloakService.isLoggedIn()) {
-    return <HomeContainer />;
-  }
+    if (data) {
+      setBalance(data);
+    } else if (error) {
+      props.setError(error);
+      setBalance("0");
+    }
+
+    if (newBalance) {
+      setBalance(newBalance.newBalance);
+    } else if (putError) {
+      props.setError(putError);
+      setBalance("0");
+    }
+  }, [
+    newBalance,
+    data,
+    error,
+    navigate,
+    props,
+    isFetchReady,
+    isSubmit,
+    putError,
+  ]);
+
   return (
     <div>
-      {/* SHOW CURRENT BALANCE */}
       <h1>Current Balance</h1>
-      <p>€{balance}</p>
+      <p>
+        €
+        {isLoaded ? (
+          balance
+        ) : <LoadingObject /> || putIsLoaded ? (
+          balance
+        ) : (
+          <LoadingObject />
+        )}
+      </p>
       <h1>Add balance</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <input
@@ -97,4 +139,4 @@ function BalanceContainer() {
   );
 }
 
-export default BalanceContainer;
+export default BalancePage;
