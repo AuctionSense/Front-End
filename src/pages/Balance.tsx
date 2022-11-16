@@ -87,6 +87,7 @@ function BalancePage(props: { setError: any }) {
     if (data) {
       setBalance(data);
     } else if (error) {
+      error.message = "Balance service is down, come back later."
       props.setError(error);
       setBalance("0");
     }

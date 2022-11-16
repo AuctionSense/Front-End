@@ -52,6 +52,14 @@ function ProductsPage(props: { setError: any }) {
     }
 
     if (error || errorGenres) {
+      if (error)
+      {
+        error.message = "Product service is down, come back later.";
+      }
+      else if (errorGenres)
+      {
+        errorGenres.message = "Genre service is down, come back later if you want to filter on genres."
+      }
       props.setError(error || errorGenres); // Set error in parent component.
     } else if (data) {
       setProducts(data);

@@ -23,6 +23,7 @@ function Navbar(props: { setError: any }) {
 
   useEffect(() => {
     if (error) {
+      error.message = "Category service is down, come back later."
       props.setError(error);
       setError(error);
     }
