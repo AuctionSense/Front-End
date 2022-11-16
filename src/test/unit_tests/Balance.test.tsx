@@ -1,7 +1,7 @@
 import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { BrowserRouter } from "react-router-dom";
-import BalancePage from "../pages/Balance";
+import BalancePage from "../../pages/Balance";
 
 test("Render balance input and check attributes.", async () => {
   // Arrange
