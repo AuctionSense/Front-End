@@ -5,6 +5,7 @@ import UseFetch from "../services/UseFetchApiService";
 import Loading from "../components/Loading";
 import Product from "../models/Product";
 import styles from "../css/Products.module.css";
+import GenresNavbar from "../components/navbar/GenresNavbar";
 
 function ProductsPage(props: { setError: any }) {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ function ProductsPage(props: { setError: any }) {
   const [currentCategory, setCurrentCategory] = useState<string>(
     category || ""
   );
+  const [genres] = useState<JSX.Element | null>(<GenresNavbar />);
 
   const [isFetchReady, setIsFetchReady] = useState<boolean>(true);
   const [products, setProducts] = useState<Product[] | null>(null);
@@ -99,12 +101,7 @@ function ProductsPage(props: { setError: any }) {
               <li>Populair</li>
             </ul>
           </div>
-          <div className={styles.genre}>
-            <h3>Genre</h3>
-            <ul>
-              <li>Genre1</li>
-            </ul>
-          </div>
+          {genres}
           <div className={styles.price}>
             <h3>Price</h3>
             <ul>
