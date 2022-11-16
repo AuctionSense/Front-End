@@ -4,6 +4,7 @@ import UseFetch from "../services/UseFetchApiService";
 import { useEffect, useState } from "react";
 import HttpConfig from "../services/HttpConfigService";
 import Loading from "../components/Loading";
+import styles from "../css/Product.module.css"
 
 function ProductPage(props: { setError: any }) {
   const navigate = useNavigate();
@@ -68,8 +69,13 @@ function ProductPage(props: { setError: any }) {
   } else {
     return (
       <main>
-        <div key={product?.id}>
+        <div key={product?.id} className={styles.productContainer}>
           <h1>{product?.name}</h1>
+          <img
+                  src="/images/minecraft-background.png"
+                  alt="Product"
+                  className={styles.productImage}
+                ></img>
           <p>{product?.description}</p>
         </div>
       </main>
