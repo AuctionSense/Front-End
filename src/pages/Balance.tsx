@@ -133,10 +133,11 @@ function BalancePage(props: { setError: any }) {
           step="0.01"
           required
           placeholder="0.00"
+          data-testid="balance-input"
           {...register("amount")}
         />
-        <p style={{ color: "red" }}>{errors.amount?.message?.toString()}</p>
-        <input type="submit" />
+        <p style={{ color: "red" }} data-testid="error-p">{errors.amount?.message?.toString()}</p>
+        <input type="submit" data-testid="form-submit-button"/>
       </form>
     </div>
     </main>

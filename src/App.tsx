@@ -40,6 +40,7 @@ function App() {
     <div className="App">
       <Navbar setError={pull_error} />
       <main>
+          
         {errors ? <ErrorMessage errors={errors} /> : null}
 
       </main>
