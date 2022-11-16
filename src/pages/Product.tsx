@@ -3,6 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import UseFetch from "../services/UseFetchApiService";
 import { useEffect, useState } from "react";
 import HttpConfig from "../services/HttpConfigService";
+import Loading from "../components/Loading";
+import styles from "../css/Product.module.css"
 
 function ProductPage(props: { setError: any }) {
   const navigate = useNavigate();
@@ -19,7 +21,7 @@ function ProductPage(props: { setError: any }) {
   }
 
   const { error, isLoaded, data, responseCode } = UseFetch(
-    `all/products/name=${productName}`,
+    `all/products/name/${productName}`,
     isFetchReady,
     HttpConfig.methods.GET
   );
@@ -59,18 +61,24 @@ function ProductPage(props: { setError: any }) {
 
   if (!isLoaded) {
     return (
-      <div>
-        <h1>{"Loading..."}</h1>
-      </div>
+      <main>
+          <Loading />
+      </main>
+
     );
   } else {
     return (
-      <div>
-        <div key={product?.id}>
+      <main>
+        <div key={product?.id} className={styles.productContainer}>
           <h1>{product?.name}</h1>
+          <img
+                  src="/images/minecraft-background.png"
+                  alt="Product"
+                  className={styles.productImage}
+                ></img>
           <p>{product?.description}</p>
         </div>
-      </div>
+      </main>
     );
   }
 }

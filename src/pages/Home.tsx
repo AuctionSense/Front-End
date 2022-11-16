@@ -1,19 +1,20 @@
 import { useEffect } from "react";
 
-function HomePage(props: {setError: any}) {
+function HomePage(props: { setError: any }) {
   const error = null;
 
   useEffect(() => {
-    if (error)
-    {
+    if (error) {
       props.setError(error);
     }
-  }, [error, props])
-  
+  }, [error, props]);
+
   return (
-    <div>
-      <h1>Home</h1>
-    </div>
+    <main>
+      <div>
+        <h1>Home</h1>
+      </div>
+    </main>
   );
 }
 

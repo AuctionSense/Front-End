@@ -6,7 +6,6 @@ import HomePage from "./pages/Home";
 import ProductPage from "./pages/Product";
 import BalancePage from "./pages/Balance";
 import NotFoundPage from "./pages/NotFound";
-import KeyCloakService from "./services/KeyCloakService";
 import { useEffect, useState } from "react";
 import ErrorMessage from "./components/ErrorMessage";
 
@@ -25,8 +24,7 @@ function App() {
 
   useEffect(() => {
     // Set current path and empty previous errors.
-    if (location.pathname !== currentPath)
-    {
+    if (location.pathname !== currentPath) {
       setCurrentPath(location.pathname);
       setErrors([]);
     }
@@ -41,12 +39,10 @@ function App() {
   return (
     <div className="App">
       <Navbar setError={pull_error} />
-      {errors ? <ErrorMessage errors={errors} /> : null}
+      <main>
+        {errors ? <ErrorMessage errors={errors} /> : null}
 
-      <button onClick={KeyCloakService.updateToken}>Refreshtoken</button>
-      <button disabled>test</button>
-
-      <Footer />
+      </main>
 
       <Routes>
         <Route path="*" element={<Navigate to="/404" replace />} />
@@ -65,6 +61,7 @@ function App() {
           element={<BalancePage setError={pull_error} />}
         />
       </Routes>
+      <Footer />
     </div>
   );
 }

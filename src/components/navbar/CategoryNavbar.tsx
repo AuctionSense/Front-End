@@ -35,7 +35,7 @@ function CategoryNavbar(props: {setError: any}) {
 
   if (!isLoaded) {
     return (
-      <div className={styles.dropDownContent} style={{color: "black"}}>
+      <div className={styles.dropDownContent}>
         <LoadingObject />
       </div>
     );

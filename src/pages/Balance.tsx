@@ -87,6 +87,7 @@ function BalancePage(props: { setError: any }) {
     if (data) {
       setBalance(data);
     } else if (error) {
+      error.message = "Balance service is down, come back later."
       props.setError(error);
       setBalance("0");
     }
@@ -109,6 +110,8 @@ function BalancePage(props: { setError: any }) {
   ]);
 
   return (
+    <main>
+
     <div>
       <h1>Current Balance</h1>
       <p>
@@ -136,6 +139,7 @@ function BalancePage(props: { setError: any }) {
         <input type="submit" />
       </form>
     </div>
+    </main>
   );
 }
 
