@@ -11,6 +11,5 @@ test("On render the test button is not active", async () => {
   );
 
   // Act
-  expect(await screen.findByRole("button", { name: /test/i })).toBeDisabled;
   // Assert
 });
