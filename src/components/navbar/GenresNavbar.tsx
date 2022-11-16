@@ -6,7 +6,7 @@ import HttpConfig from "../../services/HttpConfigService";
 import UseFetch from "../../services/UseFetchApiService";
 import { LoadingObject } from "../Loading";
 
-function GenresNavbar() {
+function GenresNavbar(props: {setError: any}) {
   const [isFetchReady, setIsFetchReady] = useState<boolean>(true);
   const [genres, setGenres] = useState<Genre[] | null>(null);
   const { category } = useParams();
@@ -32,10 +32,14 @@ function GenresNavbar() {
         setCurrentCategory(category || "");
       }
 
+      if (error)
+      {
+        props.setError(error);
+      }
     if (data) {
       setGenres(data);
     }
-  }, [isFetchReady, data, category, currentCategory]);
+  }, [isFetchReady, data, category, currentCategory, error, props]);
 
   if (!isLoaded) {
     return (

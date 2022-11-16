@@ -13,10 +13,18 @@ function ProductsPage(props: { setError: any }) {
   const [currentCategory, setCurrentCategory] = useState<string>(
     category || ""
   );
-  const [genres] = useState<JSX.Element | null>(<GenresNavbar />);
+  const [errorGenres, setErrorGenres] = useState<Error | null>(null);
 
   const [isFetchReady, setIsFetchReady] = useState<boolean>(true);
   const [products, setProducts] = useState<Product[] | null>(null);
+
+  const pull_error = (error: Error) => {
+    if (error) {
+      setErrorGenres(error);
+    }
+  };
+  const [genres] = useState<JSX.Element | null>(<GenresNavbar  setError={pull_error}/>);
+
 
   if (isFetchReady) {
     HttpConfig.setHeader("Content-Type", "application/json");
@@ -43,8 +51,8 @@ function ProductsPage(props: { setError: any }) {
       setCurrentCategory(category || "");
     }
 
-    if (error) {
-      props.setError(error); // Set error in parent component.
+    if (error || errorGenres) {
+      props.setError(error || errorGenres); // Set error in parent component.
     } else if (data) {
       setProducts(data);
     }
@@ -62,6 +70,7 @@ function ProductsPage(props: { setError: any }) {
     props,
     isLoaded,
     isFetchReady,
+    errorGenres,
   ]);
 
   if (!isLoaded) {
