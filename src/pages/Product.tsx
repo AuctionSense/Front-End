@@ -76,7 +76,7 @@ function ProductPage(props: { setError: any }) {
                   alt="Product"
                   className={styles.productImage}
                 ></img>
-          <p>{product?.description}</p>
+          <p>{product?.description} TEST CD</p>
         </div>
       </main>
     );
