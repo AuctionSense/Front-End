@@ -147,7 +147,7 @@ function ProductsPage(props: { setError: any }) {
                   className={styles.productCardLink}
                   to={`/c/${category}/${product.name}`}
                 >
-                  <h3>{product.name}</h3>
+                  <h3 data-testid="product-with-name">{product.name}</h3>
                 </Link>
                 <p>{product.description}</p>
               </div>
