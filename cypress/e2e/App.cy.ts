@@ -1,9 +1,12 @@
 describe("Login using keycloak (email=alice@gmail.com password=alice)'", () => {
     beforeEach(() => {
-        cy.visit("http://localhost:3000/");
+        cy.visit("/");
     })
 
     it("Login using alice account", () => {
-        cy.get("h1").should("have.text", "Minecraft (PC)")
+        cy.get('[data-testid="login-button"]').click();
+        cy.get('[id="username"]').type(Cypress.env('CYPRESS_USERNAME'));
+        cy.get('[id="password"]').type(Cypress.env('CYPRESS_PASSWORD'));
+        cy.get('[id="kc-login"]').click();
     })
 });

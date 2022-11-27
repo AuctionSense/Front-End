@@ -5,7 +5,13 @@ export default defineConfig({
     setupNodeEvents(on, config) {
       // implement node event listeners here
     },
+    baseUrl: 'http://localhost:3000'
   },
   video: false,
-  screenshotOnRunFailure: false
+  screenshotOnRunFailure: false,
+  chromeWebSecurity: false,
+  env: {
+    CYPRESS_USERNAME: 'alice@gmail.com',
+    CYPRESS_PASSWORD: 'alice'
+  }
 });

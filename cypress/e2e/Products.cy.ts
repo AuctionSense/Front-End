@@ -1,6 +1,6 @@
 describe("Products lenght is equal to 8'", () => {
     beforeEach(() => {
-        cy.visit("http://localhost:3000/c/Games");
+        cy.visit("/c/Games");
     })
 
     it("Should be loaded on page.", () => {
