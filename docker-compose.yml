@@ -26,6 +26,7 @@ services:
       - "postgres"
     networks:
       - auctionsense_network
+    restart: on-failure
 
 networks:
   auctionsense_network:
