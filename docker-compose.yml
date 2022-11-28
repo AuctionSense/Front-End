@@ -1,4 +1,4 @@
-version: "1.0"
+version: "3.8"
 services:
   keycloak:
     image: jarnoweemen/auctionsense:keycloak-auctionsense
@@ -26,7 +26,7 @@ services:
       - "postgres"
     networks:
       - auctionsense_network
-      
+
 networks:
   auctionsense_network:
     driver: bridge

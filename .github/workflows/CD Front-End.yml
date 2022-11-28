@@ -29,6 +29,7 @@ jobs:
       - name: Run end-to-end tests
         run: yarn test:e2e
   deploy:
+    needs: e2e
     runs-on: ubuntu-latest
 
     strategy:
@@ -41,8 +42,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+      - run: yarn
       - name: Build project
-        run: yarn build
+        run: yarn run build
       - name: Deploy to firebase
         uses: w9jds/firebase-action@master
         with:
