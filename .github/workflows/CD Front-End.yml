@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Run docker compose as background services
-        run: docker-compose up -d
+        run: docker-compose -f docker-compose.e2e.yml up -d
       - name: Update packages
         run: yarn
       - name: Run end-to-end tests
