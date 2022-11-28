@@ -14,16 +14,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - name: Run docker compose as background services
+      - run: docker-compose up -d
+      - name: Run quarkus
+      - run: docker start quarkus
+      - name: Restart quarkus
+      - run: docker restart quarkus
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Run docker compose as background services
-        run: docker-compose up -d
-      - name: Run quarkus
-        run: docker start quarkus
-      - name: Restart quarkus
-        run: docker restart quarkus
       - name: Start dev server
       - run: yarn start
       - name: Run end-to-end tests
