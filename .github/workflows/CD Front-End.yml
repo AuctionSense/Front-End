@@ -20,10 +20,6 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Run docker compose as background services
         run: docker-compose up -d
-      - name: wait
-        run: sleep 5s
-      - name: Run quarkus
-        run: docker start quarkus
       - name: Update packages
         run: yarn
       - name: Run end-to-end tests
