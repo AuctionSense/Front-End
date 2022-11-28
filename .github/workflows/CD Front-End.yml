@@ -20,8 +20,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Run docker compose as background services
         run: docker-compose -f docker-compose.e2e.yml up -d
-      - name: Update packages
-        run: yarn
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
       - name: Run end-to-end tests
         uses: cypress-io/github-action@v4.2.1
         with:
@@ -41,8 +41,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Update packages
-        run: yarn
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
       - name: Build project
         run: yarn run build
       - name: Deploy to firebase

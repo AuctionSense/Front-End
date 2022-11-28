@@ -5,7 +5,7 @@ on:
     branches: ["main"]
 
 jobs:
-  build:
+  unit_integration_tests:
     runs-on: ubuntu-latest
 
     strategy:
@@ -24,3 +24,27 @@ jobs:
         run: yarn test
       - name: run yarn build
         run: yarn build
+  sonarqube:
+    needs: unit_integration_tests
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+      - name: Run docker compose as background services
+        run: docker-compose -f docker-compose.sonarqube.yml up -d
+      - name: Run sonarqube analysis
+        uses: kitabisa/sonarqube-action@v1.2.0
+        with:
+          host: ${{ secrets.SONARQUBE_HOST }}
+          login: ${{ secrets.SONARQUBE_TOKEN }}
+
