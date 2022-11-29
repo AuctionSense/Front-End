@@ -1,22 +1,20 @@
 version: "3.8"
 services:
   sonarqube:
-    image: jarnoweemen/auctionsense:sonarqube-auctionsense
-    hostname: sonarqube
-    container_name: sonarqube
-    depends_on:
-      - sonarqube-db
+    image: sonarqube:community
+    environment:
+      SONAR_JDBC_URL: jdbc:postgresql://db.zpaqsuisqsoxgmxmxgut.supabase.co:5432/postgres
+      SONAR_JDBC_USERNAME: postgres
+      SONAR_JDBC_PASSWORD: Hj8Kpp$$6YpHbEafH
+      SONARQUBE_SKIP_BOOTSTRAP: yes
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_logs:/opt/sonarqube/logs
     ports:
       - "9000:9000"
-    networks:
-      - auctionsense_sonarqube
-  sonarqube-db:
-    image: jarnoweemen/auctionsense:sonarqube-db-auctionsense
-    hostname: postgresql
-    container_name: sonarqube-db
-    networks:
-      - auctionsense_sonarqube
 
-networks:
-  auctionsense_sonarqube:
-    driver: bridge
+volumes:
+  sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_logs:
