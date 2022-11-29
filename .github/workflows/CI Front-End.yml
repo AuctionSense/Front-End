@@ -5,7 +5,7 @@ on:
     branches: ["main"]
 
 jobs:
-  build:
+  unit_integration_tests:
     runs-on: ubuntu-latest
 
     strategy:
@@ -24,3 +24,25 @@ jobs:
         run: yarn test
       - name: run yarn build
         run: yarn build
+
+  sonarqube:
+    needs: unit_integration_tests
+    runs-on: ubuntu-latest
+    
+    services:
+      sonarqube:
+        image: jarnoweemen/auctionsense:sonarqube-auctionsense
+        ports:
+          - 9000:9000
+
+    steps:
+      - name: Checking out repository
+      uses: actions/checkout@v3
+      with:
+        # Disabling shallow clone is recommended for improving relevancy of reporting
+        fetch-depth: 0
+      - name: Run static code analysis
+        uses: kitabisa/sonarqube-action@v1.2.0
+        with:
+          host: ${{ secrets.SONARQUBE_HOST }}
+          login: ${{ secrets.SONARQUBE_TOKEN }}

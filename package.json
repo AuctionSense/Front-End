@@ -24,9 +24,10 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --testPathIgnorePatterns=.*e2e.test.tsx",
+    "test": "react-scripts test --testPathIgnorePatterns=.*e2e.test.tsx --watchAll=false --coverage --testResultsProcessor jest-sonar-reporter",
     "test:e2e": "cypress run",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "sonar": "node sonarqube-scanner.js"
   },
   "eslintConfig": {
     "extends": [
