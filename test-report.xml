@@ -2,17 +2,17 @@
 <testExecutions version="1">
   <file path="C:\Git Repositories\AuctionSense\Front-End\src\test\unit_tests\Loading.test.tsx">
     <testCase name="Assert text of loading h1 element." duration="22"/>
-    <testCase name="Assert text of loading p element." duration="6"/>
+    <testCase name="Assert text of loading p element." duration="7"/>
   </file>
   <file path="C:\Git Repositories\AuctionSense\Front-End\src\test\unit_tests\Buttons.test.tsx">
-    <testCase name="Check if css style text decoration is none and after hover has underline" duration="21"/>
+    <testCase name="Check if css style text decoration is none and after hover has underline" duration="24"/>
   </file>
   <file path="C:\Git Repositories\AuctionSense\Front-End\src\test\integration_tests\App.test.tsx">
-    <testCase name="On render login button is active." duration="59"/>
+    <testCase name="On render login button is active." duration="58"/>
   </file>
   <file path="C:\Git Repositories\AuctionSense\Front-End\src\test\integration_tests\Balance.test.tsx">
-    <testCase name="Render balance input and check attributes." duration="59"/>
-    <testCase name="Render submit button for balance form." duration="13"/>
+    <testCase name="Render balance input and check attributes." duration="58"/>
+    <testCase name="Render submit button for balance form." duration="11"/>
     <testCase name="Pass an invalid amount to test balance input field." duration="75"/>
   </file>
 </testExecutions>

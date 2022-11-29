@@ -1,6 +1,7 @@
 const scanner = require('sonarqube-scanner');
 scanner(
   {
+  projectKey: "front-end",
   serverUrl: "http://localhost:9000",
   token: "squ_ab84ffcef970999bdcac6cff8096a086c8485a34",
   options: {
