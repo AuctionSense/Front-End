@@ -36,7 +36,7 @@ jobs:
           - 9000:9000
 
     steps:
-      - name: Checking out repository
+    - name: Checking out repository
       uses: actions/checkout@v3
       with:
         # Disabling shallow clone is recommended for improving relevancy of reporting
