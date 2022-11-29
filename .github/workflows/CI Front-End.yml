@@ -28,12 +28,6 @@ jobs:
   sonarqube:
     needs: unit_integration_tests
     runs-on: ubuntu-latest
-    
-    services:
-      sonarqube:
-        image: jarnoweemen/auctionsense:sonarqube-auctionsense
-        ports:
-          - 9000:9000
 
     steps:
       - name: Checking out repository
