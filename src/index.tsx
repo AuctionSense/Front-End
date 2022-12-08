@@ -14,11 +14,9 @@ const root = ReactDOM.createRoot(
 // Create variable function to render app.
 const renderApp = () =>
   root.render(
-    <React.StrictMode>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </React.StrictMode>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   );
 
 // Pass render function to keycloak init as callback.

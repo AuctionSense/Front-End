@@ -10,10 +10,10 @@ const initKeyCloak = (onInitCallback: any) => {
       silentCheckSsoRedirectUri:
         window.location.origin + "/silent-check-sso.html",
       pkceMethod: "S256",
+      messageReceiveTimeout: 2000,
     })
     .then(() => onInitCallback())
     .catch(() => {
-      alert("Crucial services are down, please come back later.");
       onInitCallback();
     });
 };

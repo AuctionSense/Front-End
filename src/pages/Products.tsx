@@ -95,7 +95,6 @@ function ProductsPage(props: { setError: any }) {
   } else {
     return (
       <main className={styles.productsMain}>
-        <button onClick={() => alert("test")}></button>
         <nav className={styles.verticalNav}>
           <div className={styles.breadcrumb}>
             <ul>
