@@ -173,7 +173,7 @@ function ProductPage(props: { setError: any }) {
             <div className={styles.bidBox}>
               <div className={styles.bidBoxLeft}>
                 <div>
-                  <h3>Current bid by: {bids ? bids[0].user.email : ""}</h3>
+                  <h3>Current bid by: {bids ? bids[0]?.user.email : ""}</h3>
                   <p>€ {product?.price}</p>
                   <p className={styles.estimateText}>Estimate: € 0 - 30</p>
                 </div>
