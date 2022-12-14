@@ -28,6 +28,26 @@
     margin-bottom: 6px;
     width: 100%;
     padding: 20px;
+    display: flex;
+}
+
+.bidBoxLeft {
+  margin-right: 100px;
+  width: 100%;
+}
+
+.bidHistoryBox {
+  display: flex;
+  width: 100%;
+}
+
+.bidHistoryBoxDiv {
+  margin-right: 20px;
+}
+
+.bidHistoryBoxDiv p {
+  width: 125px;
+  text-align: end;
 }
 
 .bidBox h3 {

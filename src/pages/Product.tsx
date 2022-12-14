@@ -8,6 +8,8 @@ import Loading from "../components/Loading";
 import styles from "../css/Product.module.css";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import Bid from "../models/Bid";
+import KeyCloakService from "../services/KeyCloakService";
 
 function ProductPage(props: { setError: any }) {
   const navigate = useNavigate();
@@ -19,10 +21,13 @@ function ProductPage(props: { setError: any }) {
 
   const [isFetchReady, setIsFetchReady] = useState<boolean>(true);
   const [product, setProduct] = useState<Product | null>(null);
+  const [bids, setBids] = useState<Bid[] | null>(null);
+  const [amount, setAmount] = useState<number | null>(null);
+  const [isPutReady, setIsPutReady] = useState<boolean>(false);
 
   let patternTwoDigisAfterComma = /^\d+(\.\d{0,2})?$/;
 
-  if (isFetchReady) {
+  if (isFetchReady || isPutReady) {
     HttpConfig.setHeader("Content-Type", "application/json");
   }
 
@@ -32,6 +37,12 @@ function ProductPage(props: { setError: any }) {
     HttpConfig.methods.GET
   );
 
+  const { error: errorPut, isLoaded: isLoadedPut, data: dataPut, responseCode: responseCodePut } = UseFetch(
+    `all/products/name/${productName}`,
+    isPutReady,
+    HttpConfig.methods.PUT,
+    `{ "user": "${KeyCloakService.getUsername()}", "amount": "${amount}"}`
+  );
   const schema = yup.object().shape({
     amount: yup
       .number()
@@ -57,8 +68,9 @@ function ProductPage(props: { setError: any }) {
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const onSubmit = (obj: any) => {
+    setAmount(obj.amount);
+    setIsPutReady(true);
   };
 
   const backEvent = () => {
@@ -68,6 +80,11 @@ function ProductPage(props: { setError: any }) {
   useEffect(() => {
     if (isFetchReady) {
       setIsFetchReady(false);
+    }
+
+    if (isPutReady)
+    {
+      setIsPutReady(false);
     }
 
     // If product changed fetch new product.
@@ -80,6 +97,12 @@ function ProductPage(props: { setError: any }) {
       props.setError(error); // Set error in parent component.
     } else if (data) {
       setProduct(data);
+      const sortBids: Bid[] = data.bidHistory.bids
+        .sort((a: Bid, b: Bid) => {
+          return new Date(a.date).getTime() - new Date(b.date).getTime();
+        })
+        .reverse();
+      setBids(sortBids);
     }
 
     if (responseCode === 204 && isLoaded) {
@@ -96,6 +119,7 @@ function ProductPage(props: { setError: any }) {
     props,
     isLoaded,
     responseCode,
+    isPutReady
   ]);
 
   if (!isLoaded) {
@@ -128,8 +152,11 @@ function ProductPage(props: { setError: any }) {
               </li>
               <li>{" >"}</li>
               <li>
-                <Link to={`/c/${category}/${product?.name}`} className={styles.breadcrumbLink}>
-                {product?.name}
+                <Link
+                  to={`/c/${category}/${product?.name}`}
+                  className={styles.breadcrumbLink}
+                >
+                  {product?.name}
                 </Link>
               </li>
             </ul>
@@ -144,36 +171,54 @@ function ProductPage(props: { setError: any }) {
               ></img>
             </div>
             <div className={styles.bidBox}>
-              <div>
-                <h3>Current bid by: </h3>
-                <p>€ Price</p>
-                <p className={styles.estimateText}>Estimate: € price range</p>
+              <div className={styles.bidBoxLeft}>
+                <div>
+                  <h3>Current bid by: {bids ? bids[0].user.email : ""}</h3>
+                  <p>€ {product?.price}</p>
+                  <p className={styles.estimateText}>Estimate: € 0 - 30</p>
+                </div>
+                <form
+                  className={styles.bidForm}
+                  onSubmit={handleSubmit(onSubmit)}
+                >
+                  <input
+                    placeholder="0.00"
+                    type="number"
+                    min="0"
+                    max="1000"
+                    step="0.01"
+                    required
+                    data-testid="balance-input"
+                    {...register("amount")}
+                  ></input>
+                  <br></br>
+                  <p style={{ color: "red" }} data-testid="error-p">
+                    {errors.amount?.message?.toString()}
+                  </p>
+                  <button type="submit">Place bid</button>
+                </form>
               </div>
-              <form
-                className={styles.bidForm}
-                onSubmit={handleSubmit(onSubmit)}
-              >
-                <input
-                  placeholder="0.00"
-                  type="number"
-                  min="0"
-                  max="1000"
-                  step="0.01"
-                  required
-                  data-testid="balance-input"
-                  {...register("amount")}
-                ></input>
-                <br></br>
-                <p style={{ color: "red" }} data-testid="error-p">
-                  {errors.amount?.message?.toString()}
-                </p>
-                <button type="submit">Place bid</button>
-              </form>
+              <div className={styles.bidBoxRight}>
+                <h3>Bid History</h3>
+                {bids?.map((bid) => (
+                  <div key={bid.id} className={styles.bidHistoryBox}>
+                    <div className={styles.bidHistoryBoxDiv}>
+                      <p>{bid.user.email}</p>
+                    </div>
+                    <div className={styles.bidHistoryBoxDiv}>
+                      <p>{bid.date.toString().replace("T", "\u00a0")}</p>
+                    </div>
+                    <div className={styles.bidHistoryBoxDiv}>
+                      <p>€ {bid.amount}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
           <div>
             <h3>Specifications</h3>
-            <p>{product?.description} TEST CD</p>
+            <p>{product?.description}</p>
           </div>
         </div>
       </main>
