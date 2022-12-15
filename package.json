@@ -32,7 +32,8 @@
     "test": "react-scripts test --testPathIgnorePatterns=.*e2e.test.tsx --watchAll=false --coverage --testResultsProcessor jest-sonar-reporter",
     "test:e2e": "cypress run",
     "eject": "react-scripts eject",
-    "sonar": "node sonarqube-scanner.js"
+    "sonar": "node sonarqube-scanner.js",
+    "lighthouse": "node lighthouse.js"
   },
   "eslintConfig": {
     "extends": [
@@ -53,6 +54,8 @@
     ]
   },
   "devDependencies": {
-    "cypress": "^11.1.0"
+    "chrome-launcher": "^0.15.1",
+    "cypress": "^11.1.0",
+    "lighthouse": "^9.6.8"
   }
 }
