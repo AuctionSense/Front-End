@@ -33,7 +33,6 @@ function UseFetch(
         KeyCloakService.updateToken(); // Sends the user to the login page if not logged in and token cannot be renewed.
       }
     }
-
     const fetchData = async () => {
       return await fetch(
         process.env.REACT_APP_BASE_URL_DEVELOPMENT + apiDestination,

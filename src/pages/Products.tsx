@@ -6,6 +6,7 @@ import Loading from "../components/Loading";
 import Product from "../models/Product";
 import styles from "../css/Products.module.css";
 import GenresNavbar from "../components/navbar/GenresNavbar";
+import Alert from "@mui/material/Alert/Alert";
 
 function ProductsPage(props: { setError: any }) {
   const navigate = useNavigate();
@@ -87,6 +88,10 @@ function ProductsPage(props: { setError: any }) {
         <Loading />
       </main>
     );
+  } else if (error) {
+    return (
+      <Alert style={{ width: "20%"}} severity="error">This is an error alert — check it out!</Alert>
+    )
   } else {
     return (
       <main className={styles.productsMain}>
