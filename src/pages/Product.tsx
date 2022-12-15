@@ -37,7 +37,7 @@ function ProductPage(props: { setError: any }) {
     HttpConfig.methods.GET
   );
 
-  const { error: errorPut, isLoaded: isLoadedPut, data: dataPut, responseCode: responseCodePut } = UseFetch(
+   UseFetch(
     `all/products/name/${productName}`,
     isPutReady,
     HttpConfig.methods.PUT,
