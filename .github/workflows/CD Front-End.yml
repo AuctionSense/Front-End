@@ -54,6 +54,7 @@ jobs:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
 
   performance:
+    needs: deploy
     runs-on: ubuntu-latest
 
     strategy:
