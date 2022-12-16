@@ -27,34 +27,6 @@ jobs:
         with:
           build: yarn run build
           start: yarn run start
-  performance:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [18.x]
-
-    steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: Run docker compose as background services
-        run: docker-compose -f docker-compose.e2e.yml up -d
-      - name: Install dependencies
-        run: yarn --frozen-lockfile
-      - name: Audit URLs using Lighthouse
-        uses: treosh/lighthouse-ci-action@v9
-        with:
-          build: yarn run build
-          start: yarn run start
-          urls: |
-            http://localhost:3000/
-            http://localhost:3000/c/Games
-          budgetPath: ./budget.json # test performance budgets
-          uploadArtifacts: true # save results as an action artifacts
-          temporaryPublicStorage: true # upload lighthouse report to the temporary storage
           
   deploy:
     needs: e2e
@@ -81,3 +53,30 @@ jobs:
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
 
+  performance:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Run docker compose as background services
+        run: docker-compose -f docker-compose.e2e.yml up -d
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+      - name: Audit URLs using Lighthouse
+        uses: treosh/lighthouse-ci-action@v9
+        with:
+          build: yarn run build
+          start: yarn run start
+          urls: |
+            https://auctionsense-b534d.firebaseapp.com/
+          budgetPath: ./budget.json # test performance budgets
+          uploadArtifacts: true # save results as an action artifacts
+          temporaryPublicStorage: true # upload lighthouse report to the temporary storage

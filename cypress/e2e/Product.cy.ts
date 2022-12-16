@@ -4,6 +4,6 @@ describe("Product h1 name should equal to 'Minecraft (PC)'", () => {
     })
 
     it("Should be loaded on page.", () => {
-        cy.get("h1").should("have.text", "Minecraft (PC)")
+        cy.get('[data-testid="product-name"]').should("have.text", "Minecraft (PC)")
     })
 });
