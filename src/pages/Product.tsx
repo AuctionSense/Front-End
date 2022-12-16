@@ -163,7 +163,7 @@ function ProductPage(props: { setError: any }) {
           </div>
           <div className={styles.bidContainer}>
             <div className={styles.product}>
-              <h3>{product?.name}</h3>
+              <h3 data-testid="product-name">{product?.name}</h3>
               <img
                 src="/images/minecraft-background.png"
                 alt="Product"
